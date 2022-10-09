@@ -1,4 +1,5 @@
 ﻿@using WebApplication1.Helpers
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -45,28 +46,39 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            @Html.ActionLink("Użytkownicy", "ShowAllUsers", "UserManagement")
-                            <i class="far fa-circle nav-icon"></i>
+                            <a class="nav-link" asp-controller="UserManagement" asp-action="ShowAllUsers">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Użytkownicy</p>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            @Html.ActionLink("Role", "ShowAllRoles", "UserManagement")
-                            <i class="far fa-circle nav-icon"></i>
+                             <a class="nav-link" asp-controller="UserManagement" asp-action="ShowAllRoles">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Role</p>
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Typy Dokumentów", "Index", "DocTypes")
-                    <i class="far fa-circle nav-icon"></i>
+                    <a class="nav-link" asp-controller="DocTypes">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Typy Dokumentów</p>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    @Html.ActionLink("Rodzaje kosztów", "Index", "CostTypes")
-                    <i class="far fa-circle nav-icon"></i>
+                    <a class="nav-link" asp-controller="CostTypes">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Rodzaje kosztów</p>
+                    </a>
+                    
                 </li>
 
                 <li class="nav-item">
-                    @Html.ActionLink("Klienci", "Index", "Customers")
-                    <i class="far fa-circle nav-icon"></i>
+                    <a class="nav-link" asp-controller="Customers">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Klienci</p>
+                    </a>                    
                 </li>
             </ul>
         </nav>
