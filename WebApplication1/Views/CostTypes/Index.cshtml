@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApplication1.models.databasemodels.CostType>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <div id="CostTypeModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="CostTypeModalContent">
+
+            </div>
+        </div>
+    </div>
+    <p>
+        <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateCostType">Dodaj nowy typ dokumentu kosztowego</button>
+        <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="EditCostType">Edytuj typ dokumentu kosztowego</button>
+        <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="DetailsCostType">Wyświetl szczegóły</button>
+    </p>
+    <table class="table table-hover text-nowrap" id="AllDocTypesTable">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Nazwa typu kosztowego
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>

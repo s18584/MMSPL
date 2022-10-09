@@ -1,0 +1,14 @@
+﻿
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="content-wrapper">
+        
+            <b>Administracja</b>
+        @User.Identity.
+    </div>
+}
+else
+{
+    <b>Inne</b>
+}        

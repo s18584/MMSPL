@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace WebApplication1.models.databasemodels
+{
+    public partial class Document
+    {
+        public int Id { get; set; }
+        public int IdDocType { get; set; }
+        public string Path { get; set; }
+        public int IdCampaign { get; set; }
+
+        public virtual DocType IdCampaign1 { get; set; }
+        public virtual Campaign IdCampaignNavigation { get; set; }
+    }
+}

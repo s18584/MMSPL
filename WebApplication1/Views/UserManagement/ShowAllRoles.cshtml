@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+    <div class="content-wrapper">
+        <h1 class="bg-info text-white">All Roles</h1>
+        
+
+    <div class="dataTables_wrapper dt-bootstrap4">
+    <div class="row">
+        <div class="dt-buttons btn-group flex-wrap">
+            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button">
+                <span>Copy</span>
+            </button>
+            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button">
+                <span>CSV</span>
+            </button>
+            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button">
+                <span>Excel</span>
+            </button>
+            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button">
+                <span>PDF</span>
+            </button>
+            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button">
+                <span>Print</span>
+            </button>
+        </div>
+        <div class="row">
+            <table class="table table-bordered table-striped dataTable dtr-inline collapsed" aria-describedby="example1_info">
+                <thead>
+                    <tr>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort="ascending">ID</th>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort="ascending">Nazwa</th>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort="ascending">Użytkownicy</th>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort="ascending">Update</th>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort="ascending">Delete</th>
+                    </tr>
+                </thead>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.Name</td>
+                        <td i-role="@role.Id"></td>
+                        <td><a class="btn btn-sm btn-primary" asp-action="" asp-route-id="@role.Id">Update</a></td>
+                        <td>
+                            <form asp-action="" asp-route-id="@role.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
