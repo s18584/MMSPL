@@ -37,11 +37,13 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                <li class="nav-item has-treeview menu-open">
                     <a href="#" class="nav-link active">
+
                         <ion-icon name="person-circle-outline" size="large"></ion-icon>
                         <p>
                             Administracja
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -67,6 +69,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" asp-controller="Costs" asp-action="Index">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Koszty</p>
+                    </a>
+                    
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" asp-controller="CostTypes" asp-action="Index">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Rodzaje kosztów</p>
@@ -78,6 +88,27 @@
                     <a class="nav-link" asp-controller="Customers" asp-action="Index">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Klienci</p>
+                    </a>                    
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link" asp-controller="Promocodes" asp-action="Index">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Kody promocyjne</p>
+                    </a>                    
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link" asp-controller="SendingActionTypes" asp-action="Index">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Rodzaje wysyłek</p>
+                    </a>                    
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="SendingActions" asp-action="Index">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Wysyłki</p>
                     </a>                    
                 </li>
             </ul>

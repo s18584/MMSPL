@@ -4304,8 +4304,9 @@ input[type="button"].btn-block {
   list-style: none;
 }
 
+
 .nav-link {
-  display: block;
+  display: inline-block;
   padding: 0.5rem 1rem;
 }
 

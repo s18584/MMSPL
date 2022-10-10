@@ -1,0 +1,49 @@
+﻿@model WebApplication1.models.databasemodels.Cost
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Cost</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdCostType" class="control-label"></label>
+                <select asp-for="IdCostType" class="form-control" asp-items="ViewBag.IdCostType"></select>
+                <span asp-validation-for="IdCostType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCampaign" class="control-label"></label>
+                <select asp-for="IdCampaign" class="form-control" asp-items="ViewBag.IdCampaign"></select>
+                <span asp-validation-for="IdCampaign" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdContractor" class="control-label"></label>
+                <select asp-for="IdContractor" class="form-control" asp-items="ViewBag.IdContractor"></select>
+                <span asp-validation-for="IdContractor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
