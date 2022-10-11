@@ -49,10 +49,14 @@ namespace WebApplication1.Controllers
         public IActionResult Create(int? campid)
         {
             if (campid == null)
-            {
-                throw new ArgumentNullException(nameof(campid));
+            {                
+                ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name");
             }
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description");
+            else 
+            {
+                ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", campid);
+            }
+            
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name");
             return View();
         }
