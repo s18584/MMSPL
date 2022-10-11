@@ -13,15 +13,15 @@
     
 
     @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
     <partial name="_Navbar" />
     <partial name="_Sidebar" />
 
-
-
-    @RenderBody()
-
+    <div class="content-wrapper">
+        @RenderBody()
+    </div>
 
     <partial name="_Footer" />
 

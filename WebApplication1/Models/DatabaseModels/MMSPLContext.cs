@@ -271,7 +271,7 @@ namespace WebApplication1.models.databasemodels
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Document_Campaign");
 
-                entity.HasOne(d => d.IdCampaign1)
+                entity.HasOne(d => d.IdDocTypeNavigation)
                     .WithMany(p => p.Documents)
                     .HasForeignKey(d => d.IdCampaign)
                     .OnDelete(DeleteBehavior.ClientSetNull)

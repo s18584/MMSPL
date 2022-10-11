@@ -46,8 +46,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: SendingActions/Create
-        public IActionResult Create()
+        public IActionResult Create(int? campid)
         {
+            if (campid == null)
+            {
+                throw new ArgumentNullException(nameof(campid));
+            }
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description");
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name");
             return View();

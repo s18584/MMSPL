@@ -35,6 +35,8 @@ namespace WebApplication1
 
             var campaign = await _context.Campaigns
                 .Include(c => c.IdContractorNavigation)
+                .Include(c => c.CustomerCampaigns)
+                    .ThenInclude(c => c.IdCustomerNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campaign == null)
             {

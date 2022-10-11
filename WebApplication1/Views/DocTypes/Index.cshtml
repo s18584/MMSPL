@@ -4,47 +4,46 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="content-wrapper">
-    <h1>Index</h1>
+
+<h1>Index</h1>
     
 
-    <div id="DocTypeModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" id="DocTypeModalContent">
+<div id="DocTypeModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="DocTypeModalContent">
 
-            </div>
         </div>
     </div>
+</div>
     
 
-    <p>
-        <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateDocType">Dodaj nowy rodzaj dokumentu</button>
-        <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="EditDocType">Edytuj</button>
-    </p>
-    <table class="table table-hover text-nowrap" id="AllDocTypesTable">
-        <thead>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
+<p>
+    <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateDocType">Dodaj nowy rodzaj dokumentu</button>
+    <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="EditDocType">Edytuj</button>
+</p>
+<table class="table table-hover text-nowrap" id="AllDocTypesTable">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
