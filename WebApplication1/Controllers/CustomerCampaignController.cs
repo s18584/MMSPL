@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.models.databasemodels;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Controllers
 {
@@ -160,6 +161,35 @@ namespace WebApplication1.Controllers
         private bool CustomerCampaignExists(int id)
         {
             return _context.CustomerCampaigns.Any(e => e.IdCustomer == id);
+        }
+
+        // POST: CustomerCampaign/AddCustomers/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCustomers([FromRoute]int id, [Bind("IdCustomer,OkToEmail,OkToThirdParty")] AddCustomersToCampaignFormData data)
+        {
+            return Ok(data);
+
+            /*
+            if (ModelState.IsValid)
+            {
+                foreach (AddCustomersToCampaignFormData cms in data)
+                {
+                    _context.Add(new CustomerCampaign 
+                    {
+                        IdCampaign = id,
+                        IdCustomer = cms.CustomerId,
+                        OkToEmail = cms.OkToEmail,
+                        OkToThirdParty = cms.OkTo3Pty
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Campaigns", id);
+           }
+           
+           return RedirectToAction("Index", "Campaigns", id);
+            */
         }
     }
 }

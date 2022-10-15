@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.models.databasemodels;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1
 {
@@ -68,6 +69,33 @@ namespace WebApplication1
             }
             ViewData["IdContractor"] = new SelectList(_context.Contractors, "Id", "Name", campaign.IdContractor);
             return View(campaign);
+        }
+
+        // GET: Campaigns/AddCustomers/5
+        public async Task<IActionResult> AddCustomers(int id)
+        {
+            var customers = _context.Customers.Join(_context.CustomerCampaigns,
+                                                        cm => cm.Id,
+                                                        cc => cc.IdCustomer,
+                                                        (cm, cc) => new { cm, cc })
+                                                    .Join(_context.Campaigns,
+                                                        cc => cc.cc.IdCampaign,
+                                                        cmp => cmp.Id,
+                                                        (cm, cc) => new { cm, cc })
+                                                    .Where(x => !x.cc.Id.Equals(id))
+                                                    .Select(x => new Customer
+                                                    {
+                                                        Id = x.cm.cm.Id,
+                                                        FirstName = x.cm.cm.FirstName,
+                                                        LastName = x.cm.cm.LastName,
+                                                        Email = x.cm.cm.Email,
+                                                        BirthDate = x.cm.cm.BirthDate,
+                                                        Address = x.cm.cm.Address,
+                                                        City = x.cm.cm.City,
+                                                        PostCode = x.cm.cm.PostCode
+                                                    }).Distinct();
+            ViewData["RouteId"] = id;
+            return View(await customers.ToListAsync());
         }
 
         // GET: Campaigns/Edit/5

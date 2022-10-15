@@ -2,50 +2,49 @@
 @model IEnumerable<WebApplication1.Helpers.ApplicationUser>
 
 
-<div class="content-wrapper">
-    <h1 class="bg-info text-white">Wszyscy userzy</h1>
-    <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateUser">Create a User</button>
 
-    <div id="CreateUserModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" id="CreateUserModalContent">
+<h1 class="bg-info text-white">Wszyscy userzy</h1>
+<button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateUser">Create a User</button>
 
-            </div>
+<div id="CreateUserModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="CreateUserModalContent">
+
         </div>
     </div>
-
-    <table id="AllUserTable" class="table table-hover text-nowrap">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
-            <th>Login</th>
-            <th>Czy zablokowany</th>
-            
-        </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Id</td>
-                    <td>@user.FirstName</td>
-                    <td>@user.LastName</td>
-                    <td>@user.UserName</td>
-
-                    @if (user.LockoutEnd < DateAndTime.Now || user.LockoutEnd == null)
-                    {
-                        <td>Aktywny</td>
-                    }
-                    else
-                    {
-                        <td>Zablokowany</td>
-                    }
-                    
-                </tr>
-            }
-        </tbody>
-    </table>
-    <button type="button"  class="btn btn-secondary" id="UpdateUser">Update a User</button>
 </div>
+
+<table id="AllUserTable" class="table table-hover text-nowrap">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Login</th>
+        <th>Czy zablokowany</th>
+            
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.UserName</td>
+
+                @if (user.LockoutEnd < DateAndTime.Now || user.LockoutEnd == null)
+                {
+                    <td>Aktywny</td>
+                }
+                else
+                {
+                    <td>Zablokowany</td>
+                }
+                    
+            </tr>
+        }
+    </tbody>
+</table>
+<button type="button"  class="btn btn-secondary" id="UpdateUser">Update a User</button>
