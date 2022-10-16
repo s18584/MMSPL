@@ -4,13 +4,14 @@
     ViewData["Title"] = "AddCustomers";
 }
 
-<h1>AddCustomers</h1>
+<h1>Dodaj klientów</h1>
 
 <form asp-controller="CustomerCampaign" asp-action="AddCustomers" asp-route-id="@ViewData["RouteId"]">
 
     <div class="form-group">
-                <input type="submit" value="Dodaj" class="btn btn-primary" />
-            </div>
+        <input type="submit" value="Dodaj" class="btn btn-primary" /> |
+        <a asp-action="Details" asp-route-id="@ViewData["RouteId"]">Back to List</a>
+    </div>
 
 <table class="table">
     <thead>
