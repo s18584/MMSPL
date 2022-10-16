@@ -4,52 +4,104 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<form asp-action="Create">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Stwórz szablon wysyłki</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Wysyłki</a></li>
+                        <li class="breadcrumb-item active">Stwórz szablon</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">         
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Główne</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: block;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="IdSendingActionType" class="control-label"></label>
+                                <select asp-for="IdSendingActionType" class ="form-control" asp-items="ViewBag.IdSendingActionType"></select>
+                            </div>
 
-<h4>SendingAction</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdSendingActionType" class="control-label"></label>
-                <select asp-for="IdSendingActionType" class ="form-control" asp-items="ViewBag.IdSendingActionType"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdCampaign" class="control-label"></label>
-                <select asp-for="IdCampaign" class ="form-control" asp-items="ViewBag.IdCampaign"></select>
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-<div id="summernote"></div>
-    <script>
-      $('#summernote').summernote({
-        placeholder: 'Hello Bootstrap 5',
-        tabsize: 2,
-        height: 100
-      });
-    </script>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
 
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="IdCampaign" class="control-label"></label>
+                                <select asp-for="IdCampaign" class ="form-control" asp-items="ViewBag.IdCampaign"></select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <input type="submit" value="Create" class="btn btn-primary float-right" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Email</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <!--<label asp-for="EmailSubject" class="control-label"></label>-->
+                                <!--<input asp-for="EmailSubject" class="form-control" />-->                           
+                                <!--<span asp-validation-for="EmailSubject" class="text-danger"></span>-->
+                                <label for="EmailSubject">Temat email</label>
+                                <input type="text" id="EmailSubject" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <!--<label asp-for="EmailBody" class="control-label"></label>-->
+                                <!--<textarea asp-for="EmailBody" id="summernote" name="editordata"></textarea>-->
+                                <!--<span asp-validation-for="EmailBody" class="text-danger"></span>-->
+                                <label for="summernote">Treść email</label>
+                                <textarea id="summernote" name="editordata"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+    
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     
 }
+
+
+
+

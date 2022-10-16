@@ -172,3 +172,10 @@ $(function () {
 
     });
 });
+$(function () {
+    $('#summernote').summernote({
+        placeholder: 'Wpisz treść tutaj',
+        tabsize: 2,
+        height: 100
+    });
+});
