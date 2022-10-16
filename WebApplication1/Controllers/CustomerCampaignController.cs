@@ -73,18 +73,23 @@ namespace WebApplication1.Controllers
         }
 
         // GET: CustomerCampaign/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int campid, int cmid)
         {
-            if (id == null)
+            if (campid == 0 || cmid == 0)
             {
                 return NotFound();
             }
 
-            var customerCampaign = await _context.CustomerCampaigns.FindAsync(id);
+            var customerCampaign = await _context.CustomerCampaigns
+                .Include(c => c.IdCampaignNavigation)
+                .Include(c => c.IdCustomerNavigation)
+                .FirstOrDefaultAsync(m => m.IdCustomer == cmid && m.IdCampaign == campid);
+
             if (customerCampaign == null)
             {
                 return NotFound();
             }
+
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", customerCampaign.IdCampaign);
             ViewData["IdCustomer"] = new SelectList(_context.Customers, "Id", "Address", customerCampaign.IdCustomer);
             return View(customerCampaign);
@@ -95,9 +100,9 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCustomer,IdCampaign,OkToEmail,OkToThirdParty")] CustomerCampaign customerCampaign)
+        public async Task<IActionResult> Edit([Bind("IdCustomer,IdCampaign,OkToEmail,OkToThirdParty")] CustomerCampaign customerCampaign)
         {
-            if (id != customerCampaign.IdCustomer)
+            if (customerCampaign == null)
             {
                 return NotFound();
             }
@@ -120,7 +125,7 @@ namespace WebApplication1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Campaigns", new {id = customerCampaign.IdCampaign});
             }
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", customerCampaign.IdCampaign);
             ViewData["IdCustomer"] = new SelectList(_context.Customers, "Id", "Address", customerCampaign.IdCustomer);

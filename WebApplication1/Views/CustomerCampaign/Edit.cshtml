@@ -10,6 +10,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <dl class="row">
+        <dt class = "col-sm-10">
+            @Html.DisplayNameFor(model => model.IdCustomerNavigation.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCustomerNavigation.FullName)
+        </dd>
+        <dt class = "col-sm-10">
+            @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
+        </dd>
+        </dl>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdCustomer" />

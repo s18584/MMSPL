@@ -34,7 +34,7 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a> |
-    <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id">Zaplanuj wysyłkę</a> |
+    <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id">Stwórz szablon wysyłki</a> |
     <a asp-action="AddCustomers" asp-route-id="@Model.Id">Dodaj klientów</a> 
 </div>
 <hr />
@@ -76,7 +76,7 @@
                 @Html.DisplayFor(modelItem => item.OkToThirdParty)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                <a asp-controller="CustomerCampaign" asp-action="Edit" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer">Edytuj zgody</a> |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 <a asp-controller="CustomerCampaign" asp-action="Delete" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer">Usuń</a> 
             </td>
