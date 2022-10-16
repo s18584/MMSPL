@@ -15,7 +15,7 @@ namespace WebApplication1.models.databasemodels
 
         public int Id { get; set; }
 
-        [Display(Name = "Nazwa")]
+        [Display(Name = "Typ wysyłki")]
         public string Name { get; set; }
 
         public virtual ICollection<SendingAction> SendingActions { get; set; }
