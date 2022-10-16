@@ -128,9 +128,9 @@ namespace WebApplication1.Controllers
         }
 
         // GET: CustomerCampaign/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int campid, int cmid)
         {
-            if (id == null)
+            if (campid == 0 || cmid == 0)
             {
                 return NotFound();
             }
@@ -138,7 +138,7 @@ namespace WebApplication1.Controllers
             var customerCampaign = await _context.CustomerCampaigns
                 .Include(c => c.IdCampaignNavigation)
                 .Include(c => c.IdCustomerNavigation)
-                .FirstOrDefaultAsync(m => m.IdCustomer == id);
+                .FirstOrDefaultAsync(m => m.IdCustomer == cmid && m.IdCampaign == campid);
             if (customerCampaign == null)
             {
                 return NotFound();
@@ -147,15 +147,15 @@ namespace WebApplication1.Controllers
             return View(customerCampaign);
         }
 
-        // POST: CustomerCampaign/Delete/5
+        // POST: CustomerCampaign/Delete?campid=5;cmid=5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdCampaign, int IdCustomer)
         {
-            var customerCampaign = await _context.CustomerCampaigns.FindAsync(id);
+            var customerCampaign = await _context.CustomerCampaigns.FirstOrDefaultAsync(x => x.IdCampaign.Equals(IdCampaign) && x.IdCustomer.Equals(IdCustomer));
             _context.CustomerCampaigns.Remove(customerCampaign);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Campaigns", new { id = IdCampaign});
         }
 
         private bool CustomerCampaignExists(int id)
@@ -166,30 +166,28 @@ namespace WebApplication1.Controllers
         // POST: CustomerCampaign/AddCustomers/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCustomers([FromRoute]int id, [Bind("IdCustomer,OkToEmail,OkToThirdParty")] AddCustomersToCampaignFormData data)
+        public async Task<IActionResult> AddCustomers([FromRoute]int id, List<int> customerId)
         {
-            return Ok(data);
-
-            /*
             if (ModelState.IsValid)
             {
-                foreach (AddCustomersToCampaignFormData cms in data)
+                foreach (int cid in customerId)
                 {
+                    System.Diagnostics.Debug.WriteLine(cid);
                     _context.Add(new CustomerCampaign 
                     {
                         IdCampaign = id,
-                        IdCustomer = cms.CustomerId,
-                        OkToEmail = cms.OkToEmail,
-                        OkToThirdParty = cms.OkTo3Pty
+                        IdCustomer = cid,
+                        //OkToEmail = cms.OkToEmail,
+                        //OkToThirdParty = cms.OkTo3Pty
                     });
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Campaigns", id);
+                return RedirectToAction("Details", "Campaigns", new { id });
            }
            
-           return RedirectToAction("Index", "Campaigns", id);
-            */
+           return Ok("Błąd");
+           
         }
     }
 }

@@ -78,24 +78,39 @@ namespace WebApplication1
                                                         cm => cm.Id,
                                                         cc => cc.IdCustomer,
                                                         (cm, cc) => new { cm, cc })
-                                                    .Join(_context.Campaigns,
-                                                        cc => cc.cc.IdCampaign,
-                                                        cmp => cmp.Id,
-                                                        (cm, cc) => new { cm, cc })
-                                                    .Where(x => !x.cc.Id.Equals(id))
+
+                                                    .Where(x => x.cc.IdCampaign.Equals(id))
+                                                    .GroupBy(x => x.cc.IdCustomer)
+                                                    .Select(x => x.Key);
+                                                    
+            /*
                                                     .Select(x => new Customer
                                                     {
-                                                        Id = x.cm.cm.Id,
-                                                        FirstName = x.cm.cm.FirstName,
-                                                        LastName = x.cm.cm.LastName,
-                                                        Email = x.cm.cm.Email,
-                                                        BirthDate = x.cm.cm.BirthDate,
-                                                        Address = x.cm.cm.Address,
-                                                        City = x.cm.cm.City,
-                                                        PostCode = x.cm.cm.PostCode
-                                                    }).Distinct();
+                                                        Id = x.cm.Id,
+                                                        FirstName = x.cm.FirstName,
+                                                        LastName = x.cm.LastName,
+                                                        Email = x.cm.Email,
+                                                        BirthDate = x.cm.BirthDate,
+                                                        Address = x.cm.Address,
+                                                        City = x.cm.City,
+                                                        PostCode = x.cm.PostCode
+                                                    }).Distinct(); */
+
+            var customersRes = _context.Customers.Where(x => !customers.ToList().Contains(x.Id))
+                                                    .Select(x => new Customer
+                                                    {
+                                                        Id = x.Id,
+                                                        FirstName = x.FirstName,
+                                                        LastName = x.LastName,
+                                                        Email = x.Email,
+                                                        BirthDate = x.BirthDate,
+                                                        Address = x.Address,
+                                                        City = x.City,
+                                                        PostCode = x.PostCode
+                                                    }); 
+
             ViewData["RouteId"] = id;
-            return View(await customers.ToListAsync());
+            return View(await customersRes.ToListAsync());
         }
 
         // GET: Campaigns/Edit/5
