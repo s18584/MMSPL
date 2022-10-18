@@ -351,6 +351,17 @@ namespace WebApplication1.models.databasemodels
                     .IsUnicode(false)
                     .HasColumnName("name");
 
+                entity.Property(e => e.EmailSubject)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("emailSubject");
+
+                entity.Property(e => e.EmailBody)
+                    .IsRequired()
+                    .IsUnicode(false)
+                    .HasColumnName("emailBody");
+
                 entity.HasOne(d => d.IdCampaignNavigation)
                     .WithMany(p => p.SendingActions)
                     .HasForeignKey(d => d.IdCampaign)

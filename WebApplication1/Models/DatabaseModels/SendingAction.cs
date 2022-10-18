@@ -25,13 +25,12 @@ namespace WebApplication1.models.databasemodels
         public string Description { get; set; }
         public int IdCampaign { get; set; }
 
-        /*
         [Display(Name = "Tytuł emaila")]
         public string EmailSubject { get; set; }
 
         [Display(Name = "Treść emaila")]
         public string EmailBody { get; set; }
-        */
+      
 
         public virtual Campaign IdCampaignNavigation { get; set; }
         public virtual SendingActionType IdSendingActionTypeNavigation { get; set; }

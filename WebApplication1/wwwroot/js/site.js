@@ -250,7 +250,7 @@ $(document).ready(function () {
             lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
             search: "Szukaj:",
             decimal: "",
-            emptyTable: "No data available in table",
+            emptyTable: "Brak rekordów",
             info: "Wyświetlono _START_ - _END_ z _TOTAL_ rekordów",
             infoEmpty: "Wyświetlono  0 - 0 z 0 rekordów",
             infoFiltered: "(przeszukano _MAX_ rekordów)",
