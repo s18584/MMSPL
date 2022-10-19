@@ -177,7 +177,7 @@ namespace WebApplication1.Controllers
             {
                 foreach (int cid in customerId)
                 {
-                    System.Diagnostics.Debug.WriteLine(cid);
+                    
                     _context.Add(new CustomerCampaign 
                     {
                         IdCampaign = id,

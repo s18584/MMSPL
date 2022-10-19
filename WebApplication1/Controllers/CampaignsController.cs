@@ -80,7 +80,6 @@ namespace WebApplication1
                                                         cm => cm.Id,
                                                         cc => cc.IdCustomer,
                                                         (cm, cc) => new { cm, cc })
-
                                                     .Where(x => x.cc.IdCampaign.Equals(id))
                                                     .GroupBy(x => x.cc.IdCustomer)
                                                     .Select(x => x.Key);

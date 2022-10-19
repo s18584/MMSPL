@@ -34,7 +34,7 @@
                             <div class="btn-group class="text-right"">
                                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
                                 <a asp-action="Index" class="btn btn-default">Back to List</a>
-                                <a class="btn btn-default">Wyślij</a>                                
+                                <a asp-controller="CustomerSendingActions" asp-action="Send" asp-route-id="@Model.Id" class="btn btn-default">Wyślij</a>                                
                             </div>
                         </div>                      
                     </div>

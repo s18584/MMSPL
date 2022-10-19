@@ -1,24 +1,24 @@
 ﻿@model IEnumerable<WebApplication1.models.databasemodels.Customer>
 
 @{
-    ViewData["Title"] = "AddCustomers";
+    ViewData["Title"] = "Send";
 }
 
-<h1>Dodaj klientów</h1>
+<h1>View</h1>
 
-<form asp-controller="CustomerCampaign" asp-action="AddCustomers" asp-route-id="@ViewData["RouteId"]">
+<p>Wysyłka nastąpi do poniższych klientów:</p>
+
+<form asp-action="Send" asp-route-id="@ViewData["RouteId"]">
 
     <div class="form-group">
         <input type="submit" value="Dodaj" class="btn btn-primary" /> |
-        <a asp-action="Details" asp-route-id="@ViewData["RouteId"]">Back to List</a>
+        
     </div>
 
-<table class="table">
+<table class="dataTable">
     <thead>
         <tr>
-            <th>
-            </th>
-           
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -27,20 +27,25 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>          
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>          
         </tr>
     </thead>
     <tbody>
-    
 @foreach (var item in Model) {
         <tr>
-            <td>
-                <input type="checkbox" name="customerId" value="@item.Id" id="@item.Id" hidden />
-            </td>
-           
+            <td><input name="customerId" value="@item.Id" id="@item.Id" /></td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -51,11 +56,21 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
-                       
+            <td>
+                @Html.DisplayFor(modelItem => item.PostCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>           
         </tr>
 }
     </tbody>
 </table>
+
+<a>Potwierdź wysyłkę</a>
 </form>
