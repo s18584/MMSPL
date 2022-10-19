@@ -21,7 +21,9 @@ namespace WebApplication1.Controllers
         // GET: SendingActions
         public async Task<IActionResult> Index()
         {
-            var mMSPLContext = _context.SendingActions.Include(s => s.IdCampaignNavigation).Include(s => s.IdSendingActionTypeNavigation);
+            var mMSPLContext = _context.SendingActions
+                .Include(s => s.IdCampaignNavigation)
+                .Include(s => s.IdSendingActionTypeNavigation);
             return View(await mMSPLContext.ToListAsync());
         }
 
@@ -74,7 +76,7 @@ namespace WebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", sendingAction.IdCampaign);
+            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", sendingAction.IdCampaign);
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name", sendingAction.IdSendingActionType);
             return View(sendingAction);
         }
@@ -87,12 +89,16 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var sendingAction = await _context.SendingActions.FindAsync(id);
+            var sendingAction = await _context.SendingActions
+                .Include(s => s.IdCampaignNavigation)
+                .Include(s => s.IdSendingActionTypeNavigation)
+                .FirstOrDefaultAsync( x => x.Id.Equals(id));
+
             if (sendingAction == null)
             {
                 return NotFound();
             }
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", sendingAction.IdCampaign);
+            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", sendingAction.IdCampaign);
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name", sendingAction.IdSendingActionType);
             return View(sendingAction);
         }
@@ -129,7 +135,7 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", sendingAction.IdCampaign);
+            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", sendingAction.IdCampaign);
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name", sendingAction.IdSendingActionType);
             return View(sendingAction);
         }

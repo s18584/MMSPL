@@ -38,6 +38,8 @@ namespace WebApplication1
                 .Include(c => c.IdContractorNavigation)
                 .Include(c => c.CustomerCampaigns)
                     .ThenInclude(c => c.IdCustomerNavigation)
+                .Include(c => c.SendingActions)
+                    .ThenInclude(c => c.IdSendingActionTypeNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campaign == null)
             {
@@ -96,7 +98,7 @@ namespace WebApplication1
                                                         PostCode = x.cm.PostCode
                                                     }).Distinct(); */
 
-            var customersRes = _context.Customers.Where(x => !customers.ToList().Contains(x.Id))
+            var customersRes = _context.Customers.Where(x => !customers.Contains(x.Id))
                                                     .Select(x => new Customer
                                                     {
                                                         Id = x.Id,

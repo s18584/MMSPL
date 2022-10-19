@@ -4,39 +4,99 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Szczegóły szablonu wysyłki</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index">Wysyłki</a></li>
+                    <li class="breadcrumb-item active">Szczegóły szablonu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div>
-    <h4>SendingAction</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCampaignNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCampaignNavigation.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdSendingActionTypeNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdSendingActionTypeNavigation.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                           <i class="fas fa-info-circle"></i>
+                           Informacje
+                        </h3>
+                        <div class="card-tools ml-auto p-2 pr-4">                            
+                            <div class="btn-group class="text-right"">
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
+                                <a asp-action="Index" class="btn btn-default">Back to List</a>
+                                <a class="btn btn-default">Wyślij</a>                                
+                            </div>
+                        </div>                      
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class = "col-sm-2">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <dt class = "col-sm-2">
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+                            <dt class = "col-sm-2">
+                                @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
+                            </dd>
+                            <dt class = "col-sm-2">
+                                @Html.DisplayNameFor(model => model.IdSendingActionTypeNavigation.Name)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.IdSendingActionTypeNavigation.Name)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="EmailSubject" class="control-label"></label>
+                            <input asp-for="EmailSubject" class="form-control" disabled/>                         
+                            <span asp-validation-for="EmailSubject" class="text-danger"></span>                                
+                        </div>
+                        <div class="form-group" >
+                            @Html.LabelFor(m => m.EmailBody)
+                            @Html.TextAreaFor(m => m.EmailBody, new { @id = "summernote", @name = "editordata"})
+                            @Html.ValidationMessageFor(m => m.EmailBody, "", new {@class = "text-danger"})                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

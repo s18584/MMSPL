@@ -27,7 +27,7 @@
                 <div class=" card card-primary card-outline">
                     <div class="card-header d-flex p-0">
                         <h3 class="card-title p-3">
-                            <i class="fas fa-text-width"></i>
+                            <i class="fas fa-info-circle"></i>
                            Informacje
                         </h3>
                         <div class="card-tools ml-auto p-2 pr-4">                            
@@ -54,68 +54,138 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Dodani klienci</h3>
-                        <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                        </div>
+                <div class="card" style="height:580px;">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fas fa-indent"></i>
+                            Zakładki
+                        </h3>
+                        <ul class="nav nav-pills ml-auto p-2">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#tab_1" data-toggle="tab">Dodani klienci</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab_2" data-toggle="tab">Szablony wysyłek</a>
+                            </li>   
+                        </ul>                        
                     </div>
-                    <div class="card-body">
-                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
-                                        <thead>
-                                            <tr>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"> 
-                                                    @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].IdCustomerNavigation.FirstName)
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                                                    @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].IdCustomerNavigation.LastName)
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
-                                                    @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].OkToEmail)
-                                                </th>    
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
-                                                    @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].OkToThirdParty)
-                                                </th> 
-                                                <th id="actionColumn">
-                                                    Akcje
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.CustomerCampaigns) {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.IdCustomerNavigation.FirstName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.IdCustomerNavigation.LastName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.OkToEmail)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.OkToThirdParty)
-                                                    </td>
-                                                    <td class="dt-center" id="actionColumn">
-                                                        <div class="btn-group">
-                                                            <a asp-controller="CustomerCampaign" asp-action="Edit" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Edytuj zgody</a>
-                                                            <a asp-controller="CustomerCampaign" asp-action="Details" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Szczegóły</a>
-                                                            <a asp-controller="CustomerCampaign" asp-action="Delete" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Usuń</a>
-                                                        </div>                                                         
-                                                    </td>
-                                                </tr>
-                                                }
-                                        </tbody>
-                                    </table>
+                    <div class="card-body ">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].IdCustomerNavigation.FirstName)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].IdCustomerNavigation.LastName)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].IdCustomerNavigation.Email)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].OkToEmail)
+                                                        </th>    
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.CustomerCampaigns.ToList()[0].OkToThirdParty)
+                                                        </th> 
+                                                        <th class="sorting col-md-3" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.CustomerCampaigns) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCustomerNavigation.FirstName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCustomerNavigation.LastName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCustomerNavigation.Email)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.OkToEmail)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.OkToThirdParty)
+                                                            </td>
+                                                            <td class="dt-center" id="actionColumn">
+                                                                <div class="btn-group">
+                                                                    <a asp-controller="CustomerCampaign" asp-action="Edit" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Edytuj zgody</a>
+                                                                    <a asp-controller="CustomerCampaign" asp-action="Details" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Szczegóły</a>
+                                                                    <a asp-controller="CustomerCampaign" asp-action="Delete" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn-sm btn-default">Usuń</a>
+                                                                </div>                                                         
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="tab-pane" id="tab_2">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.SendingActions.ToList()[0].Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.SendingActions.ToList()[0].Description)
+                                                        </th>
+                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.SendingActions.ToList()[0].EmailSubject)
+                                                        </th>  
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.SendingActions.ToList()[0].IdSendingActionTypeNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting col-md-3" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.SendingActions) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Description)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.EmailSubject)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdSendingActionTypeNavigation.Name)
+                                                            </td>
+                                                            <td class="dt-center" id="actionColumn">
+                                                                <div class="btn-group">
+                                                                    <a asp-controller="SendingAction" asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn-default">Edytuj</a>
+                                                                    <a asp-controller="SendingAction" asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-default">Szczegóły</a>
+                                                                    <a asp-controller="SendingAction" asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-default">Usuń</a>
+                                                                </div>                                                         
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
