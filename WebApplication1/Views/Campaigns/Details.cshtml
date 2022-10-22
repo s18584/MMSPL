@@ -62,20 +62,20 @@
                         </h3>
                         <ul class="nav nav-pills ml-auto p-2">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#tab_1" data-toggle="tab">Dodani klienci</a>
+                                <a class="nav-link active" href="#tab_1" data-toggle="tab" onclick="myFunction1()">Dodani klienci</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#tab_2" data-toggle="tab">Szablony wysyłek</a>
+                                <a class="nav-link" href="#tab_2" data-toggle="tab" onclick="myFunction2()">Szablony wysyłek</a>
                             </li>   
                         </ul>                        
                     </div>
-                    <div class="card-body ">
+                    <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline">
                                                 <thead>
                                                     <tr>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
@@ -135,7 +135,7 @@
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                            <table id="dataTable1" class="table table-bordered table-striped dataTable dtr-inline">
                                                 <thead>
                                                     <tr>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
@@ -190,6 +190,15 @@
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
+<script>
+function myFunction1() {
+  document.getElementById("dataTable").init();
+}
+function myFunction2() {
+  document.getElementById("dataTable1").init();
+}
+</script>

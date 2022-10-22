@@ -171,37 +171,34 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            var customers = _context.CustomerCampaigns
+            var customers = _context.Customers.Join(_context.CustomerCampaigns,
+                                                        cm => cm.Id,
+                                                        cc => cc.IdCustomer,
+                                                        (cm, cc) => new { cm, cc })
                                                     .Join(_context.Campaigns,
-                                                        cc => cc.IdCampaign,
+                                                        cc => cc.cc.IdCampaign,
                                                         cmp => cmp.Id,
                                                         (cc, cmp) => new { cc, cmp })
                                                     .Join(_context.SendingActions,
                                                         cmp => cmp.cmp.Id,
                                                         sa => sa.IdCampaign,
                                                         (cmp, sa) => new { cmp, sa })
-                                                    .Where(x => x.sa.Id.Equals(id) && x.cmp.cc.OkToEmail == 1)
-                                                    .GroupBy(x => x.cmp.cc.IdCustomer)
-                                                    .Select(x => x.Key);
-                                                    //.Where(x => x.cc. == id && x.cc.OkToEmail == 1);
-                                                    //
-
-            var customersRes = _context.Customers.Where(x => customers.Contains(x.Id))
-                                                   .Select(x => new Customer
-                                                   {
-                                                       Id = x.Id,
-                                                       FirstName = x.FirstName,
-                                                       LastName = x.LastName,
-                                                       Email = x.Email,
-                                                       BirthDate = x.BirthDate,
-                                                       Address = x.Address,
-                                                       City = x.City,
-                                                       PostCode = x.PostCode
-                                                   });
+                                                    .Where(x => x.sa.Id.Equals(id) && x.cmp.cc.cc.OkToEmail == 1)
+                                                    .Select(x => new Customer
+                                                    {
+                                                        Id = x.cmp.cc.cm.Id,
+                                                        FirstName = x.cmp.cc.cm.FirstName,
+                                                        LastName = x.cmp.cc.cm.LastName,
+                                                        Email = x.cmp.cc.cm.Email,
+                                                        BirthDate = x.cmp.cc.cm.BirthDate,
+                                                        Address = x.cmp.cc.cm.Address,
+                                                        City = x.cmp.cc.cm.City,
+                                                        PostCode = x.cmp.cc.cm.PostCode
+                                                    });                                                   
 
             ViewData["RouteId"] = id;
 
-            return View(await customersRes.ToListAsync());
+            return View(await customers.ToListAsync());
         }
 
         // POST: CustomerCampaign/AddCustomers/5
