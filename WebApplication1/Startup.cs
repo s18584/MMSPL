@@ -14,6 +14,8 @@ namespace WebApplication1
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment _env;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +26,7 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllersWithViews();
 
             services.AddScoped<MMSPLContext>();

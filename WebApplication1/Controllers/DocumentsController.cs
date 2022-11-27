@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting.Internal;
 using WebApplication1.models.databasemodels;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Controllers
 {
     public class DocumentsController : Controller
     {
         private readonly MMSPLContext _context;
+        private readonly IWebHostEnvironment hostingEnvironment;
+
 
         public DocumentsController(MMSPLContext context)
         {
@@ -58,16 +64,34 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdDocType,Path,IdCampaign")] Document document)
+        public async Task<IActionResult> Create([Bind("Id,IdDocType,Path,IdCampaign")] AddFileModel model)
         {
+            Document document = new Document();
             if (ModelState.IsValid)
             {
+                
+                //Getting file meta data
+                var fileName = Path.GetFileName(model.Path.FileName);
+                var contentType = model.Path.ContentType;
+
+                document.Id = model.Id;
+                document.IdDocType = model.IdDocType;
+                document.IdCampaign = model.IdCampaign;
+
+                var uniqueFileName = GetUniqueFileName(model.Path.FileName);
+                var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+                var filePath = Path.Combine(uploads, uniqueFileName);
+                model.Path.CopyTo(new FileStream(filePath, FileMode.Create));
+
+
+                document.Path = filePath;
+
                 _context.Add(document);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCampaign"] = new SelectList(_context.DocTypes, "Id", "Name", document.IdCampaign);
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", document.IdCampaign);
+            ViewData["IdCampaign"] = new SelectList(_context.DocTypes, "Id", "Name", model.IdCampaign);
+            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", model.IdCampaign);
             return View(document);
         }
 
@@ -160,6 +184,18 @@ namespace WebApplication1.Controllers
         private bool DocumentExists(int id)
         {
             return _context.Documents.Any(e => e.Id == id);
+        }
+
+
+
+
+        private string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                   + "_"
+                   + Guid.NewGuid().ToString().Substring(0, 4)
+                   + Path.GetExtension(fileName);
         }
     }
 }
