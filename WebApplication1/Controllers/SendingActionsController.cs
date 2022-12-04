@@ -174,6 +174,6 @@ namespace WebApplication1.Controllers
         private bool SendingActionExists(int id)
         {
             return _context.SendingActions.Any(e => e.Id == id);
-        }
+        } 
     }
 }

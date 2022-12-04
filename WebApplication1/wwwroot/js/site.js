@@ -181,8 +181,10 @@ $(function () {
 });
 
 
-$(document).ready(function () {
-    
+
+
+$(document).ready(function () { 
+
     $('#dataTable').DataTable({
         dom: 'Bfrtip',
         colReorder: true,
@@ -264,12 +266,14 @@ $(document).ready(function () {
             zeroRecords: "Brak dopasowań"
         }
     });
+
     $('#dataTable1').DataTable({
         dom: 'Bfrtip',
         colReorder: true,
         pagingType: "full_numbers",
         lengthMenu: [10, 25, 50, 75, 100],
         lengthChange: true,
+        
 
         buttons: [
             {
@@ -345,4 +349,132 @@ $(document).ready(function () {
             zeroRecords: "Brak dopasowań"
         }
     });
+      
+    var FilteredDataTable = $('#dataTableFilters').DataTable({
+        
+        dom: 'PlBfrtip',
+        colReorder: true,
+        pagingType: "full_numbers",
+        lengthMenu: [10, 25, 50, 75, 100],
+        lengthChange: true,
+        searchPanes: {
+            cascadePanes: true
+        },
+        columnDefs: [
+            {                
+                targets: 0,
+                orderable: false,
+                searchable: false
+            },
+            {
+                searchPanes: {
+                    show: true,
+                    
+                },
+                targets: [6]
+            },
+            {
+                searchPanes: {
+                    show: true,
+                    
+                },
+                targets: [8]
+            }
+        ],
+
+        buttons: [
+            {
+                extend: 'copy',
+                text: 'Kopiuj',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'csv',
+                text: 'CSV',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'excel',
+                text: 'Excel',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Drukuj',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'colvis',
+                text: 'Wyświetlane kolumny'
+            }
+        ],
+        language: {
+            buttons: {
+                copySuccess: {
+                    1: "Skopiowano rekord do schowka",
+                    _: "Skopiowano %d rekordów do schowka"
+                },
+                copyTitle: 'Skopiowano do schowka'
+            },
+            aria: {
+                sortAscending: ": activer pour trier la colonne par ordre croissant",
+                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+            },
+            paginate: {
+                first: "Pierwsza",
+                previous: "Poprzednia",
+                next: "Następna",
+                last: "Ostatnia"
+            },
+            lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+            search: "Szukaj:",
+            decimal: "",
+            emptyTable: "Brak rekordów",
+            info: "Wyświetlono _START_ - _END_ z _TOTAL_ rekordów",
+            infoEmpty: "Wyświetlono  0 - 0 z 0 rekordów",
+            infoFiltered: "(przeszukano _MAX_ rekordów)",
+            infoPostFix: "",
+            thousands: ",",
+            lengthMenu: "Show _MENU_ entries",
+            loadingRecords: "Loading...",
+            processing: "",
+            zeroRecords: "Brak dopasowań"
+        }
+    });
+
+    $('#min, #max').keyup(function () {
+        FilteredDataTable.draw();
+    });
 });
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+    var min = parseInt($('#min').val(), 10);
+    var max = parseInt($('#max').val(), 10);
+    var age = parseFloat(data[5]) || 0; // use data for the age column
+
+    if (
+        (isNaN(min) && isNaN(max)) ||
+        (isNaN(min) && age <= max) ||
+        (min <= age && isNaN(max)) ||
+        (min <= age && age <= max)
+    ) {
+        return true;
+    }
+    return false;
+});
+

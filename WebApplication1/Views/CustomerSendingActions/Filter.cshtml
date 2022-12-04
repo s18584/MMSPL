@@ -1,0 +1,118 @@
+﻿@using WebApplication1.Service
+@model IEnumerable<WebApplication1.models.databasemodels.Customer>
+
+@{
+    ViewData["Title"] = "Filter";
+    
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Określ grupę docelową dla wysyłki</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index">Kampanie</a></li>
+                    <li class="breadcrumb-item active">Szczegóły kampanii</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<form asp-action="Send" asp-route-id="@ViewData["RouteId"]">
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista klientów</h3>
+                    </div>
+                     <div class="card-body">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="dataTableFilters" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"> 
+                                                    @Html.DisplayNameFor(model => model.FirstName)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.LastName)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
+                                                    @Html.DisplayNameFor(model => model.Email)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.BirthDate)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.Address)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.PostCode)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.City)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
+                                                    Województwo
+                                                </th>
+                                                <th id="actionColumn">
+                                                    Akcje
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model) {
+                                                <tr>
+                                                    <td><input name="customerId" value="@item.Id" id="@item.Id" hidden/></td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.LastName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Email)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.BirthDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Address)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.PostCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.City)
+                                                    </td>
+                                                    <td>
+                                                        @PostCodeService.GetAreaFromPostCode(item.PostCode)
+                                                    </td>
+                                                    <td>
+                                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                }
+                                        </tbody>                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</form>
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApplication1.Service;
 
 #nullable disable
 
@@ -25,7 +26,14 @@ namespace WebApplication1.models.databasemodels
         public string Email { get; set; }
 
         [Display(Name = "Data urodzenia")]
+        [DisplayFormat(DataFormatString ="{0:d}")]
         public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Wiek")]
+        public int Age
+        {
+            get { return DateTime.Today.Year - BirthDate.Year; }
+        }
 
         [Display(Name = "Adres")]
         public string Address { get; set; }
@@ -40,6 +48,12 @@ namespace WebApplication1.models.databasemodels
         public string FullName
         {
             get { return FirstName + " " + LastName; }
+        }
+
+        [Display(Name = "Województwo")]
+        public string Area
+        {
+            get { return PostCodeService.GetAreaFromPostCode(PostCode); }
         }
         public virtual ICollection<CustomerCampaign> CustomerCampaigns { get; set; }
         public virtual ICollection<CustomerSendingAction> CustomerSendingActions { get; set; }

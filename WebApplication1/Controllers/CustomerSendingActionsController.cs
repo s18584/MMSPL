@@ -194,14 +194,15 @@ namespace WebApplication1.Controllers
                                                         Address = x.cmp.cc.cm.Address,
                                                         City = x.cmp.cc.cm.City,
                                                         PostCode = x.cmp.cc.cm.PostCode
-                                                    });                                                   
+                                                    });
+            
 
             ViewData["RouteId"] = id;
 
             return View(await customers.ToListAsync());
         }
 
-        // POST: CustomerCampaign/AddCustomers/5
+        // POST: CustomerCampaign/Send/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Send([FromRoute] int id, List<int> customerId)
@@ -224,11 +225,50 @@ namespace WebApplication1.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Campaigns", new { id });
+                return RedirectToAction("Details", "SendingActions", new { id });
             }
 
             return Ok("Błąd");
 
+        }
+
+        // GET: CustomerSendingActions/Filter/5
+        public async Task<IActionResult> Filter(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var customers = _context.Customers.Join(_context.CustomerCampaigns,
+                                                        cm => cm.Id,
+                                                        cc => cc.IdCustomer,
+                                                        (cm, cc) => new { cm, cc })
+                                                    .Join(_context.Campaigns,
+                                                        cc => cc.cc.IdCampaign,
+                                                        cmp => cmp.Id,
+                                                        (cc, cmp) => new { cc, cmp })
+                                                    .Join(_context.SendingActions,
+                                                        cmp => cmp.cmp.Id,
+                                                        sa => sa.IdCampaign,
+                                                        (cmp, sa) => new { cmp, sa })
+                                                    .Where(x => x.sa.Id.Equals(id) && x.cmp.cc.cc.OkToEmail == 1)
+                                                    .Select(x => new Customer
+                                                    {
+                                                        Id = x.cmp.cc.cm.Id,
+                                                        FirstName = x.cmp.cc.cm.FirstName,
+                                                        LastName = x.cmp.cc.cm.LastName,
+                                                        Email = x.cmp.cc.cm.Email,
+                                                        BirthDate = x.cmp.cc.cm.BirthDate,
+                                                        Address = x.cmp.cc.cm.Address,
+                                                        City = x.cmp.cc.cm.City,
+                                                        PostCode = x.cmp.cc.cm.PostCode
+                                                    });
+
+
+            ViewData["RouteId"] = id;
+
+            return View(await customers.ToListAsync());
         }
 
     }
