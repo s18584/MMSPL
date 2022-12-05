@@ -38,16 +38,6 @@
                         <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table border="0" cellspacing="5" cellpadding="5">
-                                        <tbody><tr>
-                                            <td>Minimum age:</td>
-                                            <td><input type="text" id="min" name="min"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Maximum age:</td>
-                                            <td><input type="text" id="max" name="max"></td>
-                                        </tr>
-                                    </tbody></table>
                                     <table id="dataTableFilters" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
                                         <thead>
                                             <tr>
@@ -85,7 +75,7 @@
                                         <tbody>
                                             @foreach (var item in Model) {
                                                 <tr>
-                                                    <td><input type="checkbox" class="custom-control-input" name="customerId" value="@item.Id" id="@item.Id" checked /></td>
+                                                    <td><input type="checkbox" name="customerId" value="@item.Id" id="@item.Id" checked /></td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.FirstName)
                                                     </td>

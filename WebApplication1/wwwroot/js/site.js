@@ -172,6 +172,7 @@ $(function () {
 
     });
 });
+
 $(function () {
     $('#summernote').summernote({
         placeholder: 'Wpisz treść tutaj',
@@ -183,10 +184,15 @@ $(function () {
 
 
 
-$(document).ready(function () { 
 
+$(document).ready(function () {
+    
     $('#dataTable').DataTable({
-        dom: 'Bfrtip',
+
+        dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'fr>>" +
+             "<'row'<'col-sm-12't>>" +
+             "<'row'<'col-sm-12 col-md-4'i><'col-sm-12 col-md-8'p>>",
+
         colReorder: true,
         pagingType: "full_numbers",
         lengthMenu: [10, 25, 50, 75, 100],
@@ -349,16 +355,24 @@ $(document).ready(function () {
             zeroRecords: "Brak dopasowań"
         }
     });
-      
-    var FilteredDataTable = $('#dataTableFilters').DataTable({
+
+    
+
+    $('#dataTableFilters').DataTable({
         
-        dom: 'PlBfrtip',
+        dom: "<'row'<'col-sm-12'Q>>" +
+             "<'row'<'col-sm-12'P>>" +
+             "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'fr>>" +
+             "<'row'<'col-sm-12't>>" +
+             "<'row'<'col-sm-12 col-md-4'i><'col-sm-12 col-md-8'p>>",
+           
         colReorder: true,
         pagingType: "full_numbers",
         lengthMenu: [10, 25, 50, 75, 100],
         lengthChange: true,
         searchPanes: {
-            cascadePanes: true
+            cascadePanes: true,
+            initCollapsed: true
         },
         columnDefs: [
             {                
@@ -367,20 +381,37 @@ $(document).ready(function () {
                 searchable: false
             },
             {
+                targets: [5],
                 searchPanes: {
                     show: true,
-                    
+
                 },
-                targets: [6]
+                orderable: true,
+                searchable: true
             },
             {
+                targets: [7],
                 searchPanes: {
                     show: true,
                     
                 },
-                targets: [8]
-            }
+                orderable: true,
+                searchable: true,
+            },
+            {
+                targets: [9],
+                searchPanes: {
+                    show: true,
+                    
+                },
+                orderable: true,
+                searchable: true                
+            },
         ],
+
+        searchBuilder: {
+            columns: [1, 2, 4, 5, 6, 7, 8, 9]
+        },
 
         buttons: [
             {
@@ -455,26 +486,14 @@ $(document).ready(function () {
             processing: "",
             zeroRecords: "Brak dopasowań"
         }
+
+
+
     });
 
-    $('#min, #max').keyup(function () {
-        FilteredDataTable.draw();
-    });
+   
 });
 
-$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-    var min = parseInt($('#min').val(), 10);
-    var max = parseInt($('#max').val(), 10);
-    var age = parseFloat(data[5]) || 0; // use data for the age column
 
-    if (
-        (isNaN(min) && isNaN(max)) ||
-        (isNaN(min) && age <= max) ||
-        (min <= age && isNaN(max)) ||
-        (min <= age && age <= max)
-    ) {
-        return true;
-    }
-    return false;
-});
+
 
