@@ -62,12 +62,19 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.IdContractorNavigation.Name)
                                                     </td>                                                    
-                                                    <td class="dt-center" id="actionColumn">
-                                                         <div class="btn-group">
-                                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn-default">Edytuj</a> 
-                                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-default">Szczegóły</a> 
-                                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-default">Usuń</a>
-                                                        </div>
+                                                    <td class="text-center" id="actionColumn"> 
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-info-circle"></i>
+                                                            Szczegóły
+                                                        </a> 
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                            Edytuj
+                                                        </a>                                                         
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                            Usuń
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 }

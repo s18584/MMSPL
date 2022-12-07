@@ -31,10 +31,19 @@
                            Informacje
                         </h3>
                         <div class="card-tools ml-auto p-2 pr-4">                            
-                            <div class="btn-group class="text-right"">
-                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
-                                <a asp-action="Index" class="btn btn-default">Back to List</a>
-                                <a asp-controller="CustomerSendingActions" asp-action="Send" asp-route-id="@Model.Id" class="btn btn-default">Wyślij</a>                                
+                            <div class="btn-group text-right">                                
+                                <a asp-action="Index" class="btn btn-default">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                    Powrót
+                                    </a>
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+                                    <i class="fas fa-edit"></i>
+                                    Edytuj
+                                </a>
+                                <a asp-controller="CustomerSendingActions" asp-action="Send" asp-route-id="@Model.Id" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Wyślij
+                                </a>
                             </div>
                         </div>                      
                     </div>
