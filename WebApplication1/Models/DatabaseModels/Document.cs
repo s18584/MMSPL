@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -9,6 +10,8 @@ namespace WebApplication1.models.databasemodels
     {
         public int Id { get; set; }
         public int IdDocType { get; set; }
+
+        [Display(Name = "Ścieżka")]
         public string Path { get; set; }
         public int IdCampaign { get; set; }
 

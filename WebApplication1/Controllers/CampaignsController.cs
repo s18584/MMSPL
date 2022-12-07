@@ -22,7 +22,8 @@ namespace WebApplication1
         // GET: Campaigns
         public async Task<IActionResult> Index()
         {
-            var mMSPLContext = _context.Campaigns.Include(c => c.IdContractorNavigation);
+            var mMSPLContext = _context.Campaigns
+                                        .Include(c => c.IdContractorNavigation);
             return View(await mMSPLContext.ToListAsync());
         }
 
@@ -40,6 +41,8 @@ namespace WebApplication1
                     .ThenInclude(c => c.IdCustomerNavigation)
                 .Include(c => c.SendingActions)
                     .ThenInclude(c => c.IdSendingActionTypeNavigation)
+                .Include(c => c.Documents)
+                    .ThenInclude(c => c.IdDocTypeNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campaign == null)
             {

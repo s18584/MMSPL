@@ -79,7 +79,8 @@ namespace WebApplication1.Controllers
                 document.IdCampaign = model.IdCampaign;
 
                 var uniqueFileName = GetUniqueFileName(model.Path.FileName);
-                var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+                var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
+                //var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
                 var filePath = Path.Combine(uploads, uniqueFileName);
                 model.Path.CopyTo(new FileStream(filePath, FileMode.Create));
 

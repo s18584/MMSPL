@@ -31,11 +31,23 @@
                            Informacje
                         </h3>
                         <div class="card-tools ml-auto p-2 pr-4">                            
-                            <div class="btn-group class="text-right"">
-                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
-                                <a asp-action="Index" class="btn btn-default">Back to List</a>
-                                <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id" class="btn btn-default">Stwórz szablon wysyłki</a>
-                                <a asp-action="AddCustomers" asp-route-id="@Model.Id" class="btn btn-default">Dodaj klientów</a> 
+                            <div class="btn-group text-right">
+                                <a asp-action="Index" class="btn btn-default">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                    Powrót
+                                    </a>
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+                                    <i class="fas fa-edit"></i>
+                                    Edytuj
+                                </a>
+                                <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id" class="btn btn-default">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Stwórz szablon wysyłki
+                                </a>
+                                <a asp-action="AddCustomers" asp-route-id="@Model.Id" class="btn btn-default">
+                                    <i class="fas fa-user-plus"></i>
+                                    Dodaj klientów
+                                </a> 
                             </div>
                         </div>                      
                     </div>
@@ -46,7 +58,11 @@
                             <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
                             <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
                             <dt class="col-sm-3">@Html.DisplayNameFor(model => model.IdContractorNavigation.Name)</dt>
-                            <dd class="col-sm-9">@Html.DisplayFor(model => model.IdContractorNavigation.Name)</dd>
+                            <dd class="col-sm-9">
+                                <a asp-controller="Contractors" asp-action="Details" asp-route-id="@Model.IdContractorNavigation.Id">
+                                    @Html.DisplayFor(model => model.IdContractorNavigation.Name)
+                                </a>
+                            </dd>
                         </dl>
                     </div>
                 </div>
@@ -55,18 +71,27 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card" style="height:580px;">
-                    <div class="card-header d-flex p-0">
-                        <h3 class="card-title p-3">
-                            <i class="fas fa-indent"></i>
-                            Zakładki
-                        </h3>
-                        <ul class="nav nav-pills ml-auto p-2">
+                    <div class="card-header p-2">
+                        
+                        <ul class="nav nav-pills ">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#tab_1" data-toggle="tab" onclick="myFunction1()">Dodani klienci</a>
+                                <a class="nav-link active" href="#tab_1" data-toggle="tab">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    Dodani klienci
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#tab_2" data-toggle="tab" onclick="myFunction2()">Szablony wysyłek</a>
-                            </li>   
+                                <a class="nav-link" href="#tab_2" data-toggle="tab">
+                                    <i class="far fa-paper-plane nav-icon"></i>
+                                    Szablony wysyłek
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab_3" data-toggle="tab">
+                                    <i class="far fa-folder-open nav-icon"></i>
+                                    Dokumenty
+                                </a>
+                            </li>
                         </ul>                        
                     </div>
                     <div class="card-body">
@@ -185,20 +210,52 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="tab_3">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable2" class="table table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.Documents.ToList()[0].IdDocTypeNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Documents.ToList()[0].Path)
+                                                        </th>
+                                                        <th class="sorting col-md-3" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Documents) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdDocTypeNavigation.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Path)
+                                                            </td>
+                                                            <td class="dt-center" id="actionColumn">
+                                                                <div class="btn-group">
+                                                                    <a asp-controller="SendingAction" asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn-default">Edytuj</a>
+                                                                    <a asp-controller="SendingAction" asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-default">Szczegóły</a>
+                                                                    <a asp-controller="SendingAction" asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-default">Usuń</a>
+                                                                </div>                                                         
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>                        
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
-
-<script>
-function myFunction1() {
-  document.getElementById("dataTable").init();
-}
-function myFunction2() {
-  document.getElementById("dataTable1").init();
-}
-</script>
