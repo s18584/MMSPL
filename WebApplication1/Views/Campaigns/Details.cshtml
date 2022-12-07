@@ -40,14 +40,25 @@
                                     <i class="fas fa-edit"></i>
                                     Edytuj
                                 </a>
-                                <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id" class="btn btn-default">
-                                    <i class="fas fa-paper-plane"></i>
-                                    Stwórz szablon wysyłki
-                                </a>
-                                <a asp-action="AddCustomers" asp-route-id="@Model.Id" class="btn btn-default">
-                                    <i class="fas fa-user-plus"></i>
-                                    Dodaj klientów
-                                </a> 
+                               
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                         <a asp-controller="SendingActions" asp-action="Create" asp-route-campid="@Model.Id" class="dropdown-item">
+                                            <i class="fas fa-paper-plane"></i>
+                                            Stwórz szablon wysyłki
+                                        </a>
+                                        <a asp-action="AddCustomers" asp-route-id="@Model.Id" class="dropdown-item">
+                                            <i class="fas fa-user-plus"></i>
+                                            Dodaj klientów
+                                        </a>
+                                         <a asp-controller="Documents" asp-action="Create" asp-route-id="@Model.Id" class="dropdown-item">
+                                            <i class="fas fa-folder-open"></i>
+                                            Dodaj dokument
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>                      
                     </div>
