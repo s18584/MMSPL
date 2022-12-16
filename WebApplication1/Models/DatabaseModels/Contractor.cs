@@ -16,9 +16,14 @@ namespace WebApplication1.models.databasemodels
 
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(100)]
         [Display(Name = "Nazwa kontrahenta")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [RegularExpression(@"^[0-9]{10}$",
+            ErrorMessage = "Niepoprawny NIP")]
         [Display(Name = "NIP")]
         public string Nip { get; set; }
 

@@ -148,5 +148,21 @@ namespace WebApplication1.Controllers
         {
             return _context.Customers.Any(e => e.Id == id);
         }
+
+        private bool CustomerExists(string email)
+        {
+            return _context.Customers.Any(e => e.Email == email);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyEmail(string email)
+        {
+            if (CustomerExists(email))
+            {
+                return Json($"Ten email jest już w użyciu");
+            }
+
+            return Json(true);
+        }
     }
 }

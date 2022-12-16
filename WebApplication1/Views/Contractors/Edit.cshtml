@@ -5,30 +5,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<form asp-action="Edit">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edytuj kontrahenta</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index">Kontrahenci</a></li>
+                        <li class="breadcrumb-item active">Edytuj kontrahenta</li>
+                    </ol>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nip" class="control-label"></label>
-                <input asp-for="Nip" class="form-control" />
-                <span asp-validation-for="Nip" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </section>
+    <section class="content">         
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Dane kontrahenta</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: block;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+                            <div class="form-group">
+                                <label asp-for="Nip" class="control-label"></label>
+                                <input asp-for="Nip" class="form-control" />
+                                <span asp-validation-for="Nip" class="text-danger"></span>
+                            </div>                                                                       
+                        </div>
+                        <div class="card-footer">
+                            <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+                            <input type="submit" value="Zapisz zmiany" class="btn btn-primary float-right" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

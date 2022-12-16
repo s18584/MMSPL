@@ -33,6 +33,9 @@ namespace WebApplication1
             }
 
             var contractor = await _context.Contractors
+                .Include(x => x.Campaigns)
+                .Include(x => x.Costs)
+                    .ThenInclude(x => x.IdCostTypeNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contractor == null)
             {

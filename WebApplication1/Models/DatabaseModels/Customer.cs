@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WebApplication1.Service;
@@ -17,14 +18,23 @@ namespace WebApplication1.models.databasemodels
 
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(100)]
         [Display(Name = "Imię")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(100)]
         [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
+        [Remote(action: "VerifyEmail", controller: "Customers")]
+        [StringLength(50)]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]       
         [Display(Name = "Data urodzenia")]
         [DisplayFormat(DataFormatString ="{0:d}")]
         public DateTime BirthDate { get; set; }
@@ -35,12 +45,20 @@ namespace WebApplication1.models.databasemodels
             get { return DateTime.Today.Year - BirthDate.Year; }
         }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(100)]
         [Display(Name = "Adres")]
         public string Address { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(50)]
+        [RegularExpression(@"^[0-9]{2}-[0-9]{3}$",
+            ErrorMessage = "Niepoprawny format")]
         [Display(Name = "Kod pocztowy")]
         public string PostCode { get; set; }
 
+        [Required(ErrorMessage = "Pole jest wymagane")]
+        [StringLength(100)]
         [Display(Name = "Miasto")]
         public string City { get; set; }
 

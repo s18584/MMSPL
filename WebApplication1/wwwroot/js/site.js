@@ -181,8 +181,10 @@ $(function () {
     });
 });
 
-
-
+$(document).ready(function () {
+    $('#postcode-input').inputmask();
+    $('#date-input').inputmask();
+});
 
 
 $(document).ready(function () {

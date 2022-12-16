@@ -53,9 +53,17 @@ namespace WebApplication1
         }
 
         // GET: Campaigns/Create
-        public IActionResult Create()
+        public IActionResult Create(int? ctr)
         {
-            ViewData["IdContractor"] = new SelectList(_context.Contractors, "Id", "Name");
+            if (ctr == null)
+            {
+                ViewData["IdContractor"] = new SelectList(_context.Contractors, "Id", "Name");
+            }
+            else
+            {
+                ViewData["IdContractor"] = new SelectList(_context.Contractors, "Id", "Name", ctr);
+            }
+            
             return View();
         }
 

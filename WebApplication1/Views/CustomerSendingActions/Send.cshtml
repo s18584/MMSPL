@@ -12,8 +12,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-action="Index">Kampanie</a></li>
-                    <li class="breadcrumb-item active">Szczegóły kampanii</li>
+                    <li class="breadcrumb-item"><a asp-controller="SendingActions" asp-action="Index">Wysyłki</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="SendingActions" asp-action="Details" asp-route-id="@ViewData["RouteId"]" >Szczegóły szablonu</a></li>
+                    <li class="breadcrumb-item active">Wyślij</li>
                 </ol>
             </div>
         </div>

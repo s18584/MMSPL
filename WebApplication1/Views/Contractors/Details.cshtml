@@ -5,26 +5,213 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div>
-    <h4>Contractor</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nip)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nip)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Szczegóły kontrahenta</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index">Kontrahenci</a></li>
+                    <li class="breadcrumb-item active">Szczegóły kontrahenta</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fas fa-info-circle"></i>
+                           Informacje
+                        </h3>
+                        <div class="card-tools ml-auto p-2 pr-4">                            
+                            <div class="btn-group text-right">
+                                <a asp-action="Index" class="btn btn-default">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                    Powrót
+                                    </a>
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+                                    <i class="fas fa-edit"></i>
+                                    Edytuj
+                                </a>
+                               
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                         <a asp-controller="Campaigns" asp-action="Create" asp-route-ctr="@Model.Id" class="dropdown-item">
+                                            <i class="fas fa-bullhorn"></i> 
+                                             Stwórz kampanię
+                                        </a>
+                                        
+                                        <a asp-controller="Documents" asp-action="Create" asp-route-id="@Model.Id" class="dropdown-item">
+                                            <i class="fas fa-file-invoice-dollar"></i> 
+                                             Dodaj koszt
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                                <h3 class="text-primary">
+                                    <i class="fas fa-globe"></i>                                    
+                                    @Html.DisplayFor(model => model.Name)
+                                </h3>
+                                <br>    
+                               <div class="text-muted">
+                                    <p class="text-sm">@Html.DisplayNameFor(model => model.Nip)
+                                        <b class="d-block">@Html.DisplayFor(model => model.Nip)</b>
+                                    </p>                            
+                                </div>    
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" style="height:580px;">
+                    <div class="card-header p-2">
+                        
+                        <ul class="nav nav-pills ">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#tab_1" data-toggle="tab">
+                                    <i class="fas fa-bullhorn nav-icon"></i>
+                                    Kampanie
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab_2" data-toggle="tab">
+                                    <i class="fas fa-file-invoice-dollar nav-icon"></i>
+                                    Koszty
+                                </a>
+                            </li>
+                            
+                        </ul>                        
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.Campaigns.ToList()[0].Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Campaigns.ToList()[0].Description)
+                                                        </th>
+                                                       
+                                                        <th class="sorting col-md-3" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Campaigns) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Description)
+                                                            </td>
+                                                           
+                                                            <td class="text-center" id="actionColumn">                                                                                                                                   
+                                                                <a asp-controller="Campaigns" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                                    <i class="fas fa-info-circle"></i>
+                                                                    Szczegóły
+                                                                </a>
+                                                                <a asp-controller="Campaigns" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                    Edytuj
+                                                                </a>
+                                                                <a asp-controller="Campaigns" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i>
+                                                                    Usuń
+                                                                </a>                                                                                                                       
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_2">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable1" class="table table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].IdCostTypeNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].Amount)
+                                                        </th>   
+                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].IdCampaignNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Costs) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCostTypeNavigation.Costs)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Amount)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCampaignNavigation.Name)
+                                                            </td>
+                                                                                                                        
+                                                            <td class="text-center col-md-3" id="actionColumn">                                                                                                                                   
+                                                                <a asp-controller="Costs" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                                    <i class="fas fa-info-circle"></i>
+                                                                    Szczegóły
+                                                                </a>
+                                                                <a asp-controller="Costs" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                    Edytuj
+                                                                </a>
+                                                                <a asp-controller="Costs" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i>
+                                                                    Usuń
+                                                                </a>                                                                                                                       
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

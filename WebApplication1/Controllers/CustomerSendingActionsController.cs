@@ -233,42 +233,17 @@ namespace WebApplication1.Controllers
         }
 
         // GET: CustomerSendingActions/Filter/5
-        public async Task<IActionResult> Filter(int? id)
+        public async Task<IActionResult> Success(int? id)
         {
 
             if (id == null)
             {
                 return NotFound();
             }
-            var customers = _context.Customers.Join(_context.CustomerCampaigns,
-                                                        cm => cm.Id,
-                                                        cc => cc.IdCustomer,
-                                                        (cm, cc) => new { cm, cc })
-                                                    .Join(_context.Campaigns,
-                                                        cc => cc.cc.IdCampaign,
-                                                        cmp => cmp.Id,
-                                                        (cc, cmp) => new { cc, cmp })
-                                                    .Join(_context.SendingActions,
-                                                        cmp => cmp.cmp.Id,
-                                                        sa => sa.IdCampaign,
-                                                        (cmp, sa) => new { cmp, sa })
-                                                    .Where(x => x.sa.Id.Equals(id) && x.cmp.cc.cc.OkToEmail == 1)
-                                                    .Select(x => new Customer
-                                                    {
-                                                        Id = x.cmp.cc.cm.Id,
-                                                        FirstName = x.cmp.cc.cm.FirstName,
-                                                        LastName = x.cmp.cc.cm.LastName,
-                                                        Email = x.cmp.cc.cm.Email,
-                                                        BirthDate = x.cmp.cc.cm.BirthDate,
-                                                        Address = x.cmp.cc.cm.Address,
-                                                        City = x.cmp.cc.cm.City,
-                                                        PostCode = x.cmp.cc.cm.PostCode
-                                                    });
-
-
+            
             ViewData["RouteId"] = id;
 
-            return View(await customers.ToListAsync());
+            return View();
         }
 
     }

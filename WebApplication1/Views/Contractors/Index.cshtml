@@ -5,36 +5,91 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-hover text-nowrap" id="AllContractorsTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nip)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nip)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Kontrahenci</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Kontrahenci</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 ">
+                <div class="card card-outline card-primary">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fas fa-th-list"></i>
+                            Lista kontrahentów
+                        </h3>
+                        <div class="card-tools ml-auto p-2 pr-4">
+                            <a asp-controller="Contractors" asp-action="Create" class="btn btn-primary float-right " >
+                                <i class="far fa-building"></i>
+                                Dodaj kontrahenta
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"> 
+                                                    @Html.DisplayNameFor(model => model.Name)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.Nip)
+                                                </th>                                                                                              
+                                                <th id="actionColumn" class="col-3">
+                                                    Akcje
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model) {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Nip)
+                                                    </td>
+                                                                                                    
+                                                    <td class="text-center" id="actionColumn"> 
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-info-circle"></i>
+                                                            Szczegóły
+                                                        </a> 
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                            Edytuj
+                                                        </a>                                                         
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                            Usuń
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
