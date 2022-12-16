@@ -74,7 +74,7 @@ namespace WebApplication1.Controllers
             {
                 _context.Add(sendingAction);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = sendingAction.Id});
             }
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", sendingAction.IdCampaign);
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name", sendingAction.IdSendingActionType);

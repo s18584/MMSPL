@@ -11,9 +11,13 @@ namespace WebApplication1.models.databasemodels
         public int IdCustomer { get; set; }
         public int IdCampaign { get; set; }
 
+        [Range(0, 1)]
+        [UIHint("YesNo")]
         [Display(Name = "OK to EMAIL")]
         public int OkToEmail { get; set; }
 
+        [Range(0, 1)]
+        [UIHint("YesNo")]
         [Display(Name = "OK to 3RD")]
         public int OkToThirdParty { get; set; }
 

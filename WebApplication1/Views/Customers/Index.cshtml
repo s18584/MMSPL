@@ -95,10 +95,19 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.City)
                                                     </td>
-                                                    <td>
-                                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                                    <td class="text-center" id="actionColumn">
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-info-circle"></i>
+                                                            Szczegóły
+                                                        </a> 
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                            Edytuj
+                                                        </a>                                                         
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                            Usuń
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 }

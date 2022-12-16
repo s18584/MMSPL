@@ -4,58 +4,97 @@
     ViewData["Title"] = "AddCustomers";
 }
 
-<h1>Dodaj klientów</h1>
-
 <form asp-controller="CustomerCampaign" asp-action="AddCustomers" asp-route-id="@ViewData["RouteId"]">
-
-    <div class="form-group">
-        <input type="submit" value="Dodaj" class="btn btn-primary" /> |
-        <a asp-action="Details" asp-route-id="@ViewData["RouteId"]">Back to List</a>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Dodaj klientów</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index">Kampanie</a></li>
+                    <li class="breadcrumb-item "><a asp-action="Details" asp-route-id="@ViewData["RouteId"]">Sczegóły kampanii</a></li>
+                    <li class="breadcrumb-item active">Dodaj klientów</li>
+                </ol>
+            </div>
+        </div>
     </div>
+</section>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-            </th>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>          
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <input type="checkbox" name="customerId" value="@item.Id" id="@item.Id" />
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-                       
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 ">
+                <div class="card card-outline card-primary">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fas fa-th-list"></i>
+                             Dodaj klientów do kampanii
+                        </h3>                       
+                        <div class="card-tools ml-auto p-2 pr-4">                            
+                            <div class="btn-group text-right">                                
+                                <a href="javascript:history.go(-1)" class="btn btn-default">
+                                    <i class="fas fa-arrow-alt-circle-left"></i>
+                                    Powrót
+                                    </a>
+                                 <input type="submit" value="Dodaj" class="btn btn-primary" />
+                            </div>
+                        </div>                         
+                    </div>
+                    <div class="card-body">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"> 
+                                                    
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                     @Html.DisplayNameFor(model => model.FirstName)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
+                                                   @Html.DisplayNameFor(model => model.LastName)
+                                                </th>   
+                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
+                                                   @Html.DisplayNameFor(model => model.Email)
+                                                </th>   
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
+                                                   @Html.DisplayNameFor(model => model.Address)
+                                                </th>   
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model) {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="customerId" value="@item.Id" id="@item.Id" />
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                                    </td>
+                                                   <td>
+                                                        @Html.DisplayFor(modelItem => item.LastName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Email)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Address)
+                                                    </td> 
+                                                </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </form>

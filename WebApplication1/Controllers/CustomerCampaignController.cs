@@ -90,8 +90,16 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", customerCampaign.IdCampaign);
-            ViewData["IdCustomer"] = new SelectList(_context.Customers, "Id", "Address", customerCampaign.IdCustomer);
+            IEnumerable<SelectListItem> listItems = new[]
+            {
+                new SelectListItem{Value = "0", Text = "NIE"},
+                new SelectListItem{Value = "1", Text = "TAK"}
+            };
+
+            ViewData["OkToEmail"] = new SelectList(listItems, "Value", "Text");
+            ViewData["OkToThirdParty"] = new SelectList(listItems, "Value", "Text");
+
+           
             return View(customerCampaign);
         }
 

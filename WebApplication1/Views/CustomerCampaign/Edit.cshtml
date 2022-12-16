@@ -4,50 +4,90 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>CustomerCampaign</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <dl class="row">
-        <dt class = "col-sm-10">
-            @Html.DisplayNameFor(model => model.IdCustomerNavigation.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCustomerNavigation.FullName)
-        </dd>
-        <dt class = "col-sm-10">
-            @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
-        </dd>
-        </dl>
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdCustomer" />
-            <input type="hidden" asp-for="IdCampaign" />
-            <div class="form-group">
-                <label asp-for="OkToEmail" class="control-label"></label>
-                <input asp-for="OkToEmail" class="form-control" />
-                <span asp-validation-for="OkToEmail" class="text-danger"></span>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Edytuj zgody marketingowe</h1>
             </div>
-            <div class="form-group">
-                <label asp-for="OkToThirdParty" class="control-label"></label>
-                <input asp-for="OkToThirdParty" class="form-control" />
-                <span asp-validation-for="OkToThirdParty" class="text-danger"></span>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Kampanie</a></li>
+                    <li class="breadcrumb-item active">Edytuj zgody marketingowe</li>
+                </ol>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">         
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Dane</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <dl class="row">
+                            <dt class = "col-sm-10">
+                                @Html.DisplayNameFor(model => model.IdCustomerNavigation.FullName)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.IdCustomerNavigation.FullName)
+                            </dd>
+                            <dt class = "col-sm-10">
+                                @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
+                            </dd>
+                        </dl>                            
+                    </div>                        
+                </div>            
+                <form asp-action="Edit">           
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Zgody marketingowe</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: block;">                            
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="IdCustomer" />
+                            <input type="hidden" asp-for="IdCampaign" />
+                            <div class="form-group">
+                                <label asp-for="OkToEmail" class="control-label"></label>
+                                <select asp-for="OkToEmail" class="form-control" asp-items="ViewBag.OkToEmail"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OkToThirdParty" class="control-label"></label>
+                                <select asp-for="OkToThirdParty" class="form-control" asp-items="ViewBag.OkToThirdParty"></select>                
+                            </div>                                                                           
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Campaigns" asp-action="Details" asp-route-id="@Model.IdCampaign" class="btn btn-secondary">Anuluj</a>
+                            <input type="submit" value="Zapisz zmiany" class="btn btn-primary float-right" />
+                        </div>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

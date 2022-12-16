@@ -32,10 +32,10 @@
                         </h3>
                         <div class="card-tools ml-auto p-2 pr-4">                            
                             <div class="btn-group text-right">
-                                <a asp-action="Index" class="btn btn-default">
+                                <a href="javascript:history.go(-1)" class="btn btn-default">
                                     <i class="fas fa-arrow-alt-circle-left"></i>
                                     Powrót
-                                    </a>
+                                </a>
                                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
                                     <i class="fas fa-edit"></i>
                                     Edytuj
@@ -161,7 +161,7 @@
                                                                 @Html.DisplayFor(modelItem => item.OkToThirdParty)
                                                             </td>
                                                             <td class="text-center" id="actionColumn">                                                                                                                                   
-                                                                <a asp-controller="CustomerCampaign" asp-action="Details" asp-route-campid="@Model.Id" asp-route-cmid="@item.IdCustomer" class="btn btn-primary btn-sm">
+                                                                <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.IdCustomer" class="btn btn-primary btn-sm">
                                                                     <i class="fas fa-info-circle"></i>
                                                                     Szczegóły
                                                                 </a>
