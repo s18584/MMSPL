@@ -177,7 +177,19 @@ $(function () {
     $('#summernote').summernote({
         placeholder: 'Wpisz treść tutaj',
         tabsize: 2,
-        height: 400
+        height: 400,
+        hint: {
+            mentions: ['FirstName', 'LastName', 'Email', 'Area', 'Age', 'Address', 'PostCode', 'City', 'FullName','BirthDate'],
+            match: /\B$(\w*)$/,
+            search: function (keyword, callback) {
+                callback($.grep(this.mentions, function (item) {
+                    return item.indexOf(keyword) == 0;
+                }));
+            },
+            content: function (item) {
+                return item + '$';
+            }
+        }
     });
 });
 
