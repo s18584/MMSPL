@@ -36,6 +36,8 @@ namespace WebApplication1
                 .Include(x => x.Campaigns)
                 .Include(x => x.Costs)
                     .ThenInclude(x => x.IdCostTypeNavigation)
+                .Include(x => x.Costs)
+                    .ThenInclude(x => x.IdCampaignNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contractor == null)
             {

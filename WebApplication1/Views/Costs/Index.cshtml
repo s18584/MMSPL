@@ -5,65 +5,100 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-<div id="CostModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="CostModalContent">
-
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Koszty</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Koszty</li>
+                </ol>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<p>
-    <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateCost">Dodaj koszt</button>
-    <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="EditCost">Edytuj</button>
-</p>
-<table class="table table-hover text-nowrap" id="AllDocTypesTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCampaignNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdContractorNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCostTypeNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCampaignNavigation.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdContractorNavigation.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCostTypeNavigation.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 ">
+                <div class="card card-outline card-primary">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fas fa-th-list"></i>
+                            Lista kosztów
+                        </h3>
+                        <div class="card-tools ml-auto p-2 pr-4">
+                            <a asp-action="Create" class="btn btn-primary float-right " >
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                Dodaj koszt
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                    @Html.DisplayNameFor(model => model.IdCostTypeNavigation.Name)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                    @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                    @Html.DisplayNameFor(model => model.IdContractorNavigation.Name)
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                    @Html.DisplayNameFor(model => model.Amount)
+                                                </th>
+                                                <th id="actionColumn" class="col-3">
+                                                    Akcje
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model) {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.IdCostTypeNavigation.Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.IdCampaignNavigation.Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.IdContractorNavigation.Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Amount)
+                                                    </td>
+                                                                                                    
+                                                    <td class="text-center" id="actionColumn"> 
+                                                       
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                            Edytuj
+                                                        </a>                                                         
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                            Usuń
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
