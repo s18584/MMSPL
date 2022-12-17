@@ -31,6 +31,11 @@ namespace WebApplication1.models.databasemodels
 
         [Display(Name = "Kontrahent")]
         public int IdContractor { get; set; }
+
+        [Required(ErrorMessage = "Pole jest wymagane")]       
+        [Display(Name = "Budżet")]
+        public int Budget { get; set; }
+
         [Display(Name = "Kontrahent")]
         public virtual Contractor IdContractorNavigation { get; set; }
         public virtual ICollection<Cost> Costs { get; set; }

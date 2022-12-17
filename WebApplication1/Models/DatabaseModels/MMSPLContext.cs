@@ -72,6 +72,8 @@ namespace WebApplication1.models.databasemodels
                     .HasForeignKey(d => d.IdContractor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Campaign_Contractor");
+
+                entity.Property(e => e.Budget).HasColumnName("budget");
             });
 
             modelBuilder.Entity<Contractor>(entity =>

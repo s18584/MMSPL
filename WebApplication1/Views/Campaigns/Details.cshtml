@@ -79,7 +79,13 @@
                                                 @Html.DisplayFor(model => model.IdContractorNavigation.Name)
                                             </a>
                                         </b>
-                                    </p>                            
+                                    </p>    
+                                    <p class="text-sm">@Html.DisplayNameFor(model => model.Budget)
+                                        <b class="d-block">                                            
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                            @Html.DisplayFor(model => model.Budget)                                            
+                                        </b>
+                                    </p> 
                                 </div>    
                             </div>                           
                         </div>

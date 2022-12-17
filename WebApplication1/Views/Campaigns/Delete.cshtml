@@ -45,12 +45,19 @@
                             <dd class = "col-sm-6">
                                 @Html.DisplayFor(model => model.Description)
                             </dd>
+                             <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.Budget)
+                            </dt>
+                            <dd class = "col-sm-6">
+                                @Html.DisplayFor(model => model.Budget)
+                            </dd>
                             <dt class = "col-sm-6">
                                 @Html.DisplayNameFor(model => model.IdContractorNavigation)
                             </dt>
                             <dd class = "col-sm-6">
                                 @Html.DisplayFor(model => model.IdContractorNavigation.Name)
-                            </dd class>
+                            </dd>
+                           
                         </dl>                            
                     </div>
                     <div class="card-footer">
