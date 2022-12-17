@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.IdDocTypeNavigation)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IdCampaignNavigation)
             </th>
             <th></th>
@@ -37,14 +40,18 @@
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IdDocTypeNavigation.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdCampaignNavigation.Description)
             </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DownloadFile" asp-route-id="@item.Id">Download</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using HeyRed.Mime;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using WebApplication1.models.databasemodels;
 using WebApplication1.Models.DTO;
+
 
 namespace WebApplication1.Controllers
 {
@@ -79,21 +81,47 @@ namespace WebApplication1.Controllers
                 document.IdCampaign = model.IdCampaign;
 
                 var uniqueFileName = GetUniqueFileName(model.Path.FileName);
-                var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
-                //var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+                //var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
+                var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
                 var filePath = Path.Combine(uploads, uniqueFileName);
-                model.Path.CopyTo(new FileStream(filePath, FileMode.Create));
+                var fs = new FileStream(filePath, FileMode.Create);
+                model.Path.CopyTo(fs);
 
 
                 document.Path = filePath;
 
                 _context.Add(document);
+                fs.Close();
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCampaign"] = new SelectList(_context.DocTypes, "Id", "Name", model.IdCampaign);
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", model.IdCampaign);
             return View(document);
+        }
+
+        public async Task<IActionResult> DownloadFile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var document = await _context.Documents.FindAsync(id);
+            if (document == null)
+            {
+                return NotFound();
+            }
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(document.Path);
+            string mimeType = MimeTypesMap.GetMimeType(Path.GetFileName(document.Path));
+
+
+            return File(fileBytes, mimeType, Path.GetFileName(document.Path));
+
+
+
         }
 
         // GET: Documents/Edit/5
@@ -193,9 +221,7 @@ namespace WebApplication1.Controllers
         private string GetUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName)
-                   + "_"
-                   + Guid.NewGuid().ToString().Substring(0, 4)
+            return Guid.NewGuid().ToString()
                    + Path.GetExtension(fileName);
         }
     }

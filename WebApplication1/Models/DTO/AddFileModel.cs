@@ -14,6 +14,8 @@ namespace WebApplication1.Models.DTO
         public int IdDocType { get; set; }
         public IFormFile Path { get; set; }
         public int IdCampaign { get; set; }
+        
+        public string Description { get; set; }
 
         public virtual DocType IdDocTypeNavigation { get; set; }
         public virtual Campaign IdCampaignNavigation { get; set; }

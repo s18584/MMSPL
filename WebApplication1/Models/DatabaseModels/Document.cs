@@ -15,6 +15,9 @@ namespace WebApplication1.models.databasemodels
         public string Path { get; set; }
         public int IdCampaign { get; set; }
 
+        [Display(Name = "Opis")]
+        public string Description { get; set; }
+
         public virtual DocType IdDocTypeNavigation { get; set; }
         public virtual Campaign IdCampaignNavigation { get; set; }
     }
