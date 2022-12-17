@@ -65,7 +65,13 @@ namespace WebApplication1.models.databasemodels
         [Display(Name = "Pełne imię")]
         public string FullName
         {
-            get { return FirstName + " " + LastName; }
+            get { return $"{FirstName} {LastName}"; }
+        }
+
+        [Display(Name = "Pełny adres")]
+        public string FullAddress
+        {
+            get { return $"{Address}, {PostCode} {City}"; }
         }
 
         [Display(Name = "Województwo")]

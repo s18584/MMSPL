@@ -155,10 +155,10 @@
                                                                 @Html.DisplayFor(modelItem => item.IdCustomerNavigation.Email)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.OkToEmail)
+                                                                @Html.DisplayFor(modelItem => item.OkToEmailText)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.OkToThirdParty)
+                                                                @Html.DisplayFor(modelItem => item.OkToThirdPartyText)
                                                             </td>
                                                             <td class="text-center" id="actionColumn">                                                                                                                                   
                                                                 <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.IdCustomer" class="btn btn-primary btn-sm">

@@ -50,7 +50,7 @@
                     <div class="card-footer">
                         <form asp-action="Delete">
                             <input type="hidden" asp-for="Id" />
-                            <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+                            <a href="javascript:history.go(-1)" class="btn btn-secondary">Anuluj</a>
                             <input type="submit" value="Usuń" class="btn btn-danger float-right" />                                
                         </form>
                     </div>
