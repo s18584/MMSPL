@@ -4,42 +4,70 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Usuń przypisanie</h1>
-
-<h4>Czy chcesz usunąć poniższe przypisanie?</h4>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCustomerNavigation.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCustomerNavigation.FullName)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
-        </dd class>
-         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OkToEmail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OkToEmail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OkToThirdParty)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OkToThirdParty)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdCustomer" />
-        <input type="hidden" asp-for="IdCampaign" />
-        <input type="submit" value="Usuń" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Usuń przypisanie</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Campaigns" asp-action="Index">Kampanie</a></li>
+                    <li class="breadcrumb-item active">Usuń przypisanie</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">         
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Zamierzasz usunąć poniższe przypisanie</h3>
+                        <div class="card-tools">
+                                
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <dl class="row">
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.IdCustomerNavigation.FullName)
+                            </dt>
+                            <dd class = "col-sm-6">
+                                @Html.DisplayFor(model => model.IdCustomerNavigation.FullName)
+                            </dd class>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.IdCampaignNavigation.Name)
+                            </dt>
+                            <dd class = "col-sm-6">
+                                @Html.DisplayFor(model => model.IdCampaignNavigation.Name)
+                            </dd class>
+                             <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.OkToEmail)
+                            </dt>
+                            <dd class = "col-sm-6">
+                                @Html.DisplayFor(model => model.OkToEmailText)
+                            </dd>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.OkToThirdParty)
+                            </dt>
+                            <dd class = "col-sm-6">
+                                @Html.DisplayFor(model => model.OkToThirdPartyText)
+                            </dd>
+                        </dl>                            
+                    </div>
+                    <div class="card-footer">
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="IdCustomer" />
+                            <input type="hidden" asp-for="IdCampaign" />
+                            <a href="javascript:history.go(-1)" class="btn btn-secondary">Anuluj</a>
+                            <input type="submit" value="Usuń" class="btn btn-danger float-right" />                                
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

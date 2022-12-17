@@ -33,6 +33,9 @@ namespace WebApplication1.Controllers
             }
 
             var customer = await _context.Customers
+                .Include(x => x.CustomerCampaigns)
+                    .ThenInclude(x => x.IdCampaignNavigation)
+                    .ThenInclude(x => x.IdContractorNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
