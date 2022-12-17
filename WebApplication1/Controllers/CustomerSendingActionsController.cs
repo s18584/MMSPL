@@ -221,7 +221,8 @@ namespace WebApplication1.Controllers
                         IdCustomer = customer.Id,
                         IdSendingAction = id
                     });
-                    email.SendAsync("MMSPL-Powiadomienia", customer.Email, sendingAction.EmailSubject, sendingAction.EmailBody);
+
+                    email.SendAsync("MMSPL-Powiadomienia", customer.Email, sendingAction.EmailSubject, CompilerTemplateService.ApplyTemplate(sendingAction.EmailBody, customer));
                 }
 
                 await _context.SaveChangesAsync();
