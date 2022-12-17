@@ -43,12 +43,22 @@ namespace WebApplication1
                     .ThenInclude(c => c.IdSendingActionTypeNavigation)
                 .Include(c => c.Documents)
                     .ThenInclude(c => c.IdDocTypeNavigation)
+                .Include(c => c.Costs)
+                    .ThenInclude(c => c.IdCostTypeNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campaign == null)
             {
                 return NotFound();
             }
-
+            var data = campaign.Costs
+                                .GroupBy(c => c.IdCostTypeNavigation.Name)
+                                .Select(g => new { 
+                                    g.Key, 
+                                    value = g.Sum(x => x.Amount)
+                                })
+                                .ToList();
+            ViewData["data"] = data; 
+            Console.WriteLine(data);
             return View(campaign);
         }
 
