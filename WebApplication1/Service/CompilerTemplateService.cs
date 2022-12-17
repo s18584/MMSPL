@@ -24,6 +24,7 @@ namespace WebApplication1.Service
             sTemplate.Add("Address", customer.Address);
             sTemplate.Add("PostCode", customer.PostCode);
             sTemplate.Add("City", customer.City);
+            sTemplate.Add("FullName", customer.FullName);
 
 
             return sTemplate.Render();
