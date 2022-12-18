@@ -137,7 +137,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCampaign"] = new SelectList(_context.DocTypes, "Id", "Name", document.IdCampaign);
+            ViewData["IdDocType"] = new SelectList(_context.DocTypes, "Id", "Name", document.IdDocType);
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", document.IdCampaign);
             return View(document);
         }
@@ -147,7 +147,7 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdDocType,Path,IdCampaign")] Document document)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdDocType,Description,Path,IdCampaign")] Document document)
         {
             if (id != document.Id)
             {
