@@ -59,15 +59,9 @@ namespace WebApplication1
                                     value = g.Sum(x => x.Amount)
                                 })
                                 .ToList();
-            var data2 = new List<int>()
-                    {
-                        10,
-                        40,
-                        80,
-                        50
-                    }; 
+            
             ViewData["data"] = data; 
-            Console.WriteLine(data);
+            
             return View(campaign);
         }
 
