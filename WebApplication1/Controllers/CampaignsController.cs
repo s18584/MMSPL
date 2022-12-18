@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Description;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace WebApplication1
         }
 
         // GET: Campaigns/Details/5
+        [ResponseType(typeof(CampaignDetailsDto))]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,21 +48,54 @@ namespace WebApplication1
                 .Include(c => c.Costs)
                     .ThenInclude(c => c.IdCostTypeNavigation)
                 .Include(c => c.Costs)
-                    .ThenInclude(c => c.IdContractorNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                    .ThenInclude(c => c.IdContractorNavigation)   
+                .Where(c => c.Id == id)
+                .Select(c => 
+                   new CampaignDetailsDto()
+                   {
+                       Id = c.Id,
+                       Name = c.Name,
+                       Description = c.Description,
+                       IdContractor = c.IdContractor,
+                       Budget = c.Budget,
+                       IdContractorNavigation = c.IdContractorNavigation,
+                       Costs = c.Costs,
+                       CustomerCampaigns = c.CustomerCampaigns,
+                       Documents = c.Documents,
+                       Promocodes = c.Promocodes,
+                       SendingActions = c.SendingActions,                     
+
+                       UsersCountData = c.CustomerCampaigns.Count,
+                       CostSumData = c.Costs.Sum(x => x.Amount)
+                   }
+                )                 
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (campaign == null)
             {
                 return NotFound();
             }
-            var data = campaign.Costs
+            
+            var costGroupData = campaign.Costs
                                 .GroupBy(c => c.IdCostTypeNavigation.Name)
-                                .Select(g => new { 
-                                    key = g.Key, 
-                                    value = g.Sum(x => x.Amount)
+                                .Select(g => new GroupRaportDataDto
+                                { 
+                                    Key = g.Key, 
+                                    Value = g.Sum(x => x.Amount)
                                 })
                                 .ToList();
-            
-            ViewData["data"] = data; 
+
+            var sendingActionsGroupData = campaign.SendingActions
+                                            .GroupBy(c => c.IdSendingActionTypeNavigation.Name)
+                                            .Select(s => new GroupRaportDataDto
+                                            {
+                                                Key = s.Key,
+                                                Value = s.Count()
+                                            })
+                                            .ToList();
+
+            ViewData["costGroupData"] = costGroupData; 
+            ViewData["sendingActionsGroupData"] = sendingActionsGroupData;
             
             return View(campaign);
         }
