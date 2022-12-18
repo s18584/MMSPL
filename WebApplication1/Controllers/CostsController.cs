@@ -25,27 +25,6 @@ namespace WebApplication1.Controllers
             return View(await mMSPLContext.ToListAsync());
         }
 
-        // GET: Costs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cost = await _context.Costs
-                .Include(c => c.IdCampaignNavigation)
-                .Include(c => c.IdContractorNavigation)
-                .Include(c => c.IdCostTypeNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cost == null)
-            {
-                return NotFound();
-            }
-
-            return View(cost);
-        }
-
         // GET: Costs/Create
         public IActionResult Create()
         {
