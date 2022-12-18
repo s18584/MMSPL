@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebApplication1.Helpers;
+using WebApplication1.models.databasemodels;
 using WebApplication1.Models.UserManagement;
 
 namespace WebApplication1.Controllers
@@ -41,8 +42,34 @@ namespace WebApplication1.Controllers
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
             model.Email = user.Email;
+            model.Id = guid;
+            
             
             return View("EditUser",model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserModel model)
+        {
+            var user = await _userManagement.FindByIdAsync(model.Id);
+            
+            var token =await _userManagement.GenerateChangeEmailTokenAsync(user, model.Email);
+
+            
+            await _userManagement.ChangeEmailAsync(user, model.Email, token);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            
+            user.UserName = model.Email;
+            await _userManagement.UpdateNormalizedEmailAsync(user);
+            await _userManagement.UpdateNormalizedUserNameAsync(user);
+
+            await _userManagement.UpdateAsync(user);
+
+
+            return RedirectToAction(nameof(ShowAllUsers));
         }
 
         [HttpPost]
