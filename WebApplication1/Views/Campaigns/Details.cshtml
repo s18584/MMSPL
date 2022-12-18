@@ -64,7 +64,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                            <div class="col-md-6 ">
                                 <h3 class="text-primary">
                                     <i class="fas fa-ad"></i>                                    
                                     @Html.DisplayFor(model => model.Name)
@@ -86,10 +86,56 @@
                                             @Html.DisplayFor(model => model.Budget)                                            
                                         </b>
                                     </p> 
-
-                                    <textarea placeholder="@ViewData["data"]"></textarea>
+                                                                        
                                 </div>    
-                            </div>                           
+                            </div>
+                            <div class="col-md-3 ">
+                                <div>
+                                      <canvas id="myChart"></canvas>
+                                    </div>
+                                    <script>
+                                      const ctx = document.getElementById('myChart');
+
+                                      var jsondata = @Html.Raw(Json.Serialize(ViewData["data"]));
+
+                                      var labels = jsondata.map(function(e) {
+                                        return e.key;
+                                      });
+                                      var data = jsondata.map(function(e) {
+                                        return e.value;
+                                      });
+                                      console.log(labels);
+                                      console.log(data);
+                                      
+                                      new Chart(ctx, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [{
+                                                
+                                                data: data    //[{id: 'Sales', nested: {value: 1500}}, {id: 'Purchases', nested: {value: 500}}]
+                                            }]
+                                        },
+                                        options: {
+                                            
+                                            parsing: {
+                                               
+                                            },
+                                            plugins: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Rozkład kosztów'
+                                                },
+                                                legend: {
+                                                  position: "bottom",
+                                                  display: true,
+                                                }
+                                            }
+                                        }
+                                      });
+                                    </script>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -117,6 +163,12 @@
                                 <a class="nav-link" href="#tab_3" data-toggle="tab">
                                     <i class="far fa-folder-open nav-icon"></i>
                                     Dokumenty
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab_4" data-toggle="tab">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                    Koszty
                                 </a>
                             </li>
                         </ul>                        
@@ -294,6 +346,57 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="tab_4">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTable4" class="table table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"> 
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].IdContractorNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].IdCostTypeNavigation.Name)
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                                            @Html.DisplayNameFor(model => model.Costs.ToList()[0].Amount)
+                                                        </th>
+                                                        <th class="sorting col-md-2" id="actionColumn">
+                                                            Akcje
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Costs) {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdContractorNavigation.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdCostTypeNavigation.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Amount)
+                                                            </td>
+                                                            <td class="text-center col-md-3" id="actionColumn"> 
+                                                                <a asp-controller="Costs" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                    Edytuj
+                                                                </a>
+                                                                <a asp-controller="Costs" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i>
+                                                                    Usuń
+                                                                </a>                                                                                                                       
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>                        
                     </div>
                 </div>
@@ -301,3 +404,9 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+}

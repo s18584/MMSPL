@@ -45,6 +45,8 @@ namespace WebApplication1
                     .ThenInclude(c => c.IdDocTypeNavigation)
                 .Include(c => c.Costs)
                     .ThenInclude(c => c.IdCostTypeNavigation)
+                .Include(c => c.Costs)
+                    .ThenInclude(c => c.IdContractorNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campaign == null)
             {
@@ -53,10 +55,17 @@ namespace WebApplication1
             var data = campaign.Costs
                                 .GroupBy(c => c.IdCostTypeNavigation.Name)
                                 .Select(g => new { 
-                                    g.Key, 
+                                    key = g.Key, 
                                     value = g.Sum(x => x.Amount)
                                 })
                                 .ToList();
+            var data2 = new List<int>()
+                    {
+                        10,
+                        40,
+                        80,
+                        50
+                    }; 
             ViewData["data"] = data; 
             Console.WriteLine(data);
             return View(campaign);
@@ -82,7 +91,7 @@ namespace WebApplication1
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,IdContractor")] Campaign campaign)
+        public async Task<IActionResult> Create([Bind("Id,Name,Budget,Description,IdContractor")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
@@ -157,7 +166,7 @@ namespace WebApplication1
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,IdContractor")] Campaign campaign)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Budget,Description,IdContractor")] Campaign campaign)
         {
             if (id != campaign.Id)
             {

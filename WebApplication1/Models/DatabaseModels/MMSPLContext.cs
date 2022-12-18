@@ -267,6 +267,12 @@ namespace WebApplication1.models.databasemodels
                     .IsUnicode(false)
                     .HasColumnName("path");
 
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
                 entity.HasOne(d => d.IdCampaignNavigation)
                     .WithMany(p => p.Documents)
                     .HasForeignKey(d => d.IdCampaign)

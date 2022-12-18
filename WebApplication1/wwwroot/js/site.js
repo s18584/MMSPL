@@ -456,6 +456,90 @@ $(document).ready(function () {
             zeroRecords: "Brak dopasowań"
         }
     });
+    $('#dataTable4').DataTable({
+        dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'fr>>" +
+            "<'row'<'col-sm-12't>>" +
+            "<'row'<'col-sm-12 col-md-4'i><'col-sm-12 col-md-8'p>>",
+        colReorder: true,
+        pagingType: "full_numbers",
+        lengthMenu: [10, 25, 50, 75, 100],
+        lengthChange: true,
+
+
+        buttons: [
+            {
+                extend: 'copy',
+                text: 'Kopiuj',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'csv',
+                text: 'CSV',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'excel',
+                text: 'Excel',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Drukuj',
+                exportOptions: {
+                    columns: ':visible :not(#actionColumn)'
+                }
+            },
+            {
+                extend: 'colvis',
+                text: 'Wyświetlane kolumny'
+            }
+        ],
+        language: {
+            buttons: {
+                copySuccess: {
+                    1: "Skopiowano rekord do schowka",
+                    _: "Skopiowano %d rekordów do schowka"
+                },
+                copyTitle: 'Skopiowano do schowka'
+            },
+            aria: {
+                sortAscending: ": activer pour trier la colonne par ordre croissant",
+                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+            },
+            paginate: {
+                first: "Pierwsza",
+                previous: "Poprzednia",
+                next: "Następna",
+                last: "Ostatnia"
+            },
+            lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+            search: "Szukaj:",
+            decimal: "",
+            emptyTable: "Brak rekordów",
+            info: "Wyświetlono _START_ - _END_ z _TOTAL_ rekordów",
+            infoEmpty: "Wyświetlono  0 - 0 z 0 rekordów",
+            infoFiltered: "(przeszukano _MAX_ rekordów)",
+            infoPostFix: "",
+            thousands: ",",
+            lengthMenu: "Show _MENU_ entries",
+            loadingRecords: "Loading...",
+            processing: "",
+            zeroRecords: "Brak dopasowań"
+        }
+    });
 
     $('#dataTableFilters').DataTable({
         
