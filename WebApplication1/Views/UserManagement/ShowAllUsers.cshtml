@@ -1,38 +1,83 @@
 ﻿@using Microsoft.VisualBasic
 @model IEnumerable<WebApplication1.Helpers.ApplicationUser>
 
-
-
-<h1 class="bg-info text-white">Wszyscy userzy</h1>
-<button type="button" data-target="#login_for_review" class="btn btn-secondary" id="CreateUser">Create a User</button>
-
-<div id="CreateUserModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="CreateUserModalContent">
-
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Użytkownicy</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Użytkownicy</li>
+                </ol>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<table id="AllUserTable" class="table table-hover text-nowrap">
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card card-primary card-outline">
+<div class="card-header d-flex p-0">
+    <h3 class="card-title p-3 ">
+        <i class="fas fa-th-list"></i>
+        Lista użytkowników
+    </h3>
+    <div class="card-tools ml-auto p-2 pr-4">
+        <a asp-controller="UserManagement" asp-action="CreateUser" class="btn btn-primary float-right" >
+            <i class="fas fa-user-plus"></i>
+            Dodaj
+        </a>
+    </div>
+</div>
+                    
+<div class="card-body">
+<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+<div class="row">
+<div class="col-sm-12">
+<table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>Imię</th>
-        <th>Nazwisko</th>
-        <th>Login</th>
-        <th>Czy zablokowany</th>
-            
-    </tr>
+        <tr>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                Status użytkownika
+            </th>
+            <th id="actionColumn">
+                Akcje
+            </th>
+        </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
+    @foreach (var user in Model)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.FirstName</td>
-                <td>@user.LastName</td>
-                <td>@user.UserName</td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.UserName)
+            </td>
 
                 @if (user.LockoutEnd < DateAndTime.Now || user.LockoutEnd == null)
                 {
@@ -42,9 +87,31 @@
                 {
                     <td>Zablokowany</td>
                 }
-                    
+                <td class="text-center" id="actionColumn">
+                    <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
+                        <i class="fas fa-info-circle"></i>
+                        Szczegóły
+                    </a> 
+                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-info btn-sm">
+                        <i class="fas fa-pencil-alt"></i>
+                        Edytuj
+                    </a>                                                         
+                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                        Usuń
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-<button type="button"  class="btn btn-secondary" id="UpdateUser">Update a User</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
