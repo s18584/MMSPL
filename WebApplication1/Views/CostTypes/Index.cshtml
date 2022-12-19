@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!--
 <div id="CostTypeModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="document" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="CostTypeModalContent">
@@ -17,29 +17,92 @@
     <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="EditCostType">Edytuj typ dokumentu kosztowego</button>
     <button type="button" data-target="#login_for_review" class="btn btn-secondary" id="DetailsCostType">Wyświetl szczegóły</button>
 </p>
-<table class="table table-hover text-nowrap" id="AllDocTypesTable">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Nazwa typu kosztowego
-            </th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                </tr>
-        }
-    </tbody>
-</table>
+-->
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Typy kosztów</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Typy kosztów</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3 ">
+                            <i class="fas fa-th-list"></i>
+                            Lista typów kosztów
+                            </h3>
+                        <div class="card-tools ml-auto p-2 pr-4">
+                            <a asp-action="Create" class="btn btn-primary float-right" >
+                                
+                                Dodaj
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">                        
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="dataTable_info">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"> 
+                                                    ID
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                                                    @Html.DisplayNameFor(model => model.Name)
+                                                </th>
+                                                
+                                                <th id="actionColumn" class="col-2">
+                                                    Akcje
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model) {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                    </td>
+                                                    <td class="text-center" id="actionColumn">
+                                                        
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                            Edytuj
+                                                        </a>                                                         
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                            Usuń
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

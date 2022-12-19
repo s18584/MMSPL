@@ -1,19 +1,18 @@
-﻿@model WebApplication1.models.databasemodels.DocType
+﻿@model WebApplication1.models.databasemodels.CostType
 
 @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "View";
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Usuń typ dokumentu</h1>
+                <h1>Usuń typ kosztu</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-action="Index">Typy dokumentów</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Typy kosztów</a></li>
                     <li class="breadcrumb-item active">Usuń typ</li>
                 </ol>
             </div>
@@ -26,17 +25,17 @@
             <div class="col-md-4">
                 <div class="card card-danger">
                     <div class="card-header">
-                        <h3 class="card-title">Zamierzasz usunąć poniższy typ dokumentu</h3>
+                        <h3 class="card-title">Zamierzasz usunąć poniższy typ kosztu</h3>
                         <div class="card-tools">
                                 
                         </div>
                     </div>
                     <div class="card-body" style="display: block;">
                         <dl class="row">
-                            <dt class="col-sm-6">
+                            <dt class = "col-sm-6">
                                 @Html.DisplayNameFor(model => model.Name)
                             </dt>
-                            <dd class="col-sm-6">
+                            <dd class = "col-sm-6">
                                 @Html.DisplayFor(model => model.Name)
                             </dd>
                         </dl>                            

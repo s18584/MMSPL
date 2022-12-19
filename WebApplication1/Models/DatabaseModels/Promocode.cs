@@ -15,8 +15,9 @@ namespace WebApplication1.models.databasemodels
 
         [Display(Name = "Wartość")]
         public string Value { get; set; }
+        [Display(Name = "Kampania")]
         public int IdCampaign { get; set; }
-
+        [Display(Name = "Kampania")]
         public virtual Campaign IdCampaignNavigation { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace WebApplication1.models.databasemodels
     public partial class Document
     {
         public int Id { get; set; }
+        [Display(Name = "Typ dokumentu")]
         public int IdDocType { get; set; }
 
         [Display(Name = "Ścieżka")]
@@ -18,7 +19,9 @@ namespace WebApplication1.models.databasemodels
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
+        [Display(Name = "Typ dokumentu")]
         public virtual DocType IdDocTypeNavigation { get; set; }
+        [Display(Name = "Kampania")]
         public virtual Campaign IdCampaignNavigation { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
                         //var templateFile = RazorHtmlGenerator.CompileContent("EmailTemplate/LoginMailTemplate.cshtml", user);
 
                        // email.SendAsync("MMSPL-Powiadomienia", model.Email, "Poprawne logowanie do systemu", templateFile);
-                        return LocalRedirect("/UserManagement");
+                        return LocalRedirect("/Campaigns");
                     }
                     else
                     {

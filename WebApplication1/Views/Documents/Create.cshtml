@@ -40,13 +40,8 @@
                                 <select asp-for="IdDocType" class="form-control" asp-items="ViewBag.IdDocType"></select>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Path" class="control-label"></label>                                
-                                <div class="input-group">
-                                    <div class="custom-file">                                    
-                                    <input type="file" asp-for="Path" class="custom-file-input form-control" />
-                                    <label class="custom-file-label" for="exampleInputFile">Wybierz plik</label>
-                                    </div>                                    
-                                </div>
+                                <label asp-for="Path" class="control-label"></label>
+                                <input type="file" asp-for="Path" class="form-control" />
                                 <span asp-validation-for="Path" class="text-danger"></span>
                             </div>
             
