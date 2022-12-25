@@ -51,17 +51,6 @@ namespace WebApplication1.Controllers
                     {
                         var user = await _userManager.FindByEmailAsync(model.Email);
 
-                        //var email = new EmailService("serwer1311887.home.pl", 465, SecureSocketOptions.SslOnConnect);
-
-                        string templateFilePath = "EmailTemplate/LoginMailTemplate.html";
-                        //var templateFile = System.IO.File.ReadAllText(templateFilePath);
-
-                        //templateFile = templateFile.Replace("@Model.FirstName", user.FirstName);
-                        //templateFile = templateFile.Replace("@Model.LastName", user.LastName);
-
-                        //var templateFile = RazorHtmlGenerator.CompileContent("EmailTemplate/LoginMailTemplate.cshtml", user);
-
-                       // email.SendAsync("MMSPL-Powiadomienia", model.Email, "Poprawne logowanie do systemu", templateFile);
                         return LocalRedirect("/Campaigns");
                     }
                     else
