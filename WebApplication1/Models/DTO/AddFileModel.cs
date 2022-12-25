@@ -15,7 +15,7 @@ namespace WebApplication1.Models.DTO
         [Display(Name = "Typ dokumentu")]
         public int IdDocType { get; set; }
 
-        [Display(Name = "Ścieżka")]
+        [Display(Name = "Plik")]
         public IFormFile Path { get; set; }
 
         [Display(Name = "Kampania")]

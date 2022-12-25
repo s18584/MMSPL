@@ -30,7 +30,9 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Index()
         {
             var mMSPLContext = _context.Documents.Include(d => d.IdDocTypeNavigation).Include(d => d.IdCampaignNavigation);
-            return View(await mMSPLContext.ToListAsync());
+
+            var list = await mMSPLContext.ToListAsync();
+            return View(list);
         }
 
         // GET: Documents/Details/5
@@ -66,7 +68,7 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdDocType,Description,Path,IdCampaign")] AddFileModel model)
+        public async Task<IActionResult> Create([Bind("Id,IdDocType,Path,Description,IdCampaign")] AddFileModel model)
         {
             Document document = new Document();
             if (ModelState.IsValid)
@@ -81,8 +83,8 @@ namespace WebApplication1.Controllers
                 document.IdCampaign = model.IdCampaign;
 
                 var uniqueFileName = GetUniqueFileName(model.Path.FileName);
-                var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
-                //var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+                //var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
+                var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
                 var filePath = Path.Combine(uploads, uniqueFileName);
                 var fs = new FileStream(filePath, FileMode.Create);
                 model.Path.CopyTo(fs);

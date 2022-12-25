@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<form asp-action="Create">
+<form asp-action="Create" enctype = "multipart/form-data">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -41,20 +41,26 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Path" class="control-label"></label>
-                                <input type="file" asp-for="Path" class="form-control" />
-                                <span asp-validation-for="Path" class="text-danger"></span>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        @Html.TextBoxFor(m => m.Path, new { type = "file", id = "Path", name = "Path", @class = "custom-file-input form-control" })
+
+                                        @Html.LabelFor(m=>m.Path, new { @class= "custom-file-label", @value="Wybierz plik" })
+                                    </div>
+                                    </div>
+                                    <span asp-validation-for="Path" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="IdCampaign" class="control-label"></label>
+                                    <select asp-for="IdCampaign" class="form-control" asp-items="ViewBag.IdCampaign"></select>
+                                </div>
                             </div>
-            
-                            <div class="form-group">
-                                <label asp-for="Description" class="control-label"></label>
-                                <input asp-for="Description" class="form-control" />
-                                <span asp-validation-for="Description" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="IdCampaign" class="control-label"></label>
-                                <select asp-for="IdCampaign" class="form-control" asp-items="ViewBag.IdCampaign"></select>
-                            </div>                                                                                
-                        </div>
                         <div class="card-footer">
                             <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
                             <input type="submit" value="Dodaj" class="btn btn-primary float-right" />
