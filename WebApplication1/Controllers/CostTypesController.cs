@@ -18,6 +18,7 @@ namespace WebApplication1.Controllers
         // GET: CostTypes
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.CostTypes.ToListAsync());
         }
 

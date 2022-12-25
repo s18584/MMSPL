@@ -46,22 +46,26 @@ namespace WebApplication1.Controllers
                 if (singOutResult.IsCompletedSuccessfully)
                 {
                     var resultOfLogin = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
-
+                    
                     if (resultOfLogin.Succeeded)
                     {
                         var user = await _userManager.FindByEmailAsync(model.Email);
-
+                        Serilog.Log.Information("User zalogowany porpawnie: " + user.Email);
                         return LocalRedirect("/Campaigns");
                     }
                     else
                     {
                         if (resultOfLogin.IsLockedOut)
                         {
+                            Serilog.Log.Information("Zablokowany user chciał się zalogować: " + model.Email);
                             ModelState.AddModelError(string.Empty, "Konto użytkownika jest zablokowane.");
                             return View("ErrorLogin", model);
                         }
+                        
+                        Serilog.Log.Information("Nieudana próba zalogowania: " + model.Email);
                         ModelState.AddModelError(string.Empty, "Nieudana próba logowania.");
                         return View("ErrorLogin", model);
+                        
                     }
                 }
             }
