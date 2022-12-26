@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers
     {
         private readonly MMSPLContext _context;
         private readonly IWebHostEnvironment hostingEnvironment;
-
+        private readonly String uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
 
         public DocumentsController(MMSPLContext context)
         {
@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
 
                 var uniqueFileName = GetUniqueFileName(model.Path.FileName);
                 //var uploads = Path.Combine(@"C:\Users\lasoc\source\repos\MMSPL\WebApplication1\wwwroot\", "Files");
-                var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+                //var uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
                 var filePath = Path.Combine(uploads, uniqueFileName);
                 var fs = new FileStream(filePath, FileMode.Create);
                 model.Path.CopyTo(fs);
@@ -116,14 +116,16 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
+            var files =System.IO.Directory.GetFiles(uploads);
+            if (!files.Contains(document.Path))
+            {
+                return NotFound();
+            }
+
             byte[] fileBytes = System.IO.File.ReadAllBytes(document.Path);
             string mimeType = MimeTypesMap.GetMimeType(Path.GetFileName(document.Path));
-
-
+            
             return File(fileBytes, mimeType, Path.GetFileName(document.Path));
-
-
-
         }
 
         // GET: Documents/Edit/5
