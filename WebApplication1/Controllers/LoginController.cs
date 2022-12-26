@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using MailKit.Security;
 using Microsoft.AspNetCore.Razor.Language;
 using RazorEngine;
@@ -81,6 +82,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string UserId, string code)
         {
+            if (UserId.IsNullOrEmpty() || code.IsNullOrEmpty())
+            {
+                return BadRequest();
+            }
             var user = await _userManager.FindByIdAsync(UserId);
             var model = new ResetPasswordModel
             {
@@ -101,12 +106,13 @@ namespace WebApplication1.Controllers
                 return View("ResetPassword", model);
             }
 
+             
             await _userManager.ResetPasswordAsync(user, model.ResetPasswordToken, model.Password);
             await _userManager.ResetAccessFailedCountAsync(user);
             await _userManager.SetLockoutEndDateAsync(user,null);
 
-            ModelState.AddModelError(string.Empty, "Podane hasła różnią się!");
-            return View("ResetPassword", model);
+            ModelState.AddModelError(string.Empty, "Hasło zostało zmienione!");
+            return View("Index", model);
 
         }
     }

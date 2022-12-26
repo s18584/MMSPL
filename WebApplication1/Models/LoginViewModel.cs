@@ -4,12 +4,16 @@ namespace WebApplication1.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        
         [EmailAddress]
+        [Display(Name = "E-mail")]
+        [Required(ErrorMessage = "Pole e-mail jest wymagane")]
         public string Email { get; set; }
 
-        [Required]
+        
         [DataType(DataType.Password)]
+        [Display(Name = "Hasło")]
+        [Required(ErrorMessage = "Pole hasło jest wymagane")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]

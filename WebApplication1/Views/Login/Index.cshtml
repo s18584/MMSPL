@@ -31,7 +31,7 @@
                 <p class="login-box-msg">Zaloguj się, aby móc korzystać z pełni aplikacji!</p>
                 <form method="post" asp-controller="Login" asp-action="OnPost">
                     <div class="input-group mb-3">
-                        <input asp-for="@Model.Email" class="form-control"/>
+                        <input asp-for="@Model.Email" class="form-control" placeholder="Podaj adres e-mail" />
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -41,12 +41,16 @@
                     </div>
                     <div class="input-group mb-3">
 
-                        <input asp-for="@Model.Password" type="password" class="form-control"/>
+                        <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Podaj hasło do konta" />
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        <div class="input-group mb-3">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-8">
@@ -57,7 +61,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                        
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
                         </div>
