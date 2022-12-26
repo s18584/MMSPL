@@ -1,5 +1,5 @@
 ﻿@using Microsoft.VisualBasic
-@model IEnumerable<WebApplication1.Helpers.ApplicationUser>
+@model IEnumerable<WebApplication1.Models.UserManagement.ShowUsersWithRole>
 
 <section class="content-header">
     <div class="container-fluid">
@@ -55,6 +55,9 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                 Status użytkownika
             </th>
             <th id="actionColumn">
@@ -72,12 +75,16 @@
             <td>
                 @Html.DisplayFor(modelItem => user.FirstName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => user.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => user.UserName)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.UserName)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => user.Role)
+                </td>
 
                 @if (user.LockoutEnd < DateAndTime.Now || user.LockoutEnd == null)
                 {
@@ -88,9 +95,9 @@
                     <td>Zablokowany</td>
                 }
                 <td class="text-center" id="actionColumn">
-                    <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
+                    <a asp-action="SendResetPassword" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
                         <i class="fas fa-info-circle"></i>
-                        Szczegóły
+                        Wyślij link do resetrowania hasła
                     </a> 
                     <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-info btn-sm">
                         <i class="fas fa-pencil-alt"></i>

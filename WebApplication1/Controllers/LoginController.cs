@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MailKit.Security;
@@ -7,6 +8,7 @@ using RazorEngine;
 using RazorEngine.Templating;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
+using WebApplication1.Models.DTO;
 using WebApplication1.Service;
 
 namespace WebApplication1.Controllers
@@ -63,17 +65,49 @@ namespace WebApplication1.Controllers
                         {
                             Serilog.Log.Information("Zablokowany user chciał się zalogować: " + model.Email);
                             ModelState.AddModelError(string.Empty, "Konto użytkownika jest zablokowane.");
-                            return View("ErrorLogin", model);
+                            return View("Index", model);
                         }
                         
                         Serilog.Log.Information("Nieudana próba zalogowania: " + model.Email);
                         ModelState.AddModelError(string.Empty, "Nieudana próba logowania.");
-                        return View("ErrorLogin", model);
+                        return View("Index", model);
                         
                     }
                 }
             }
             return View("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string UserId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+            var model = new ResetPasswordModel
+            {
+                Email = user.Email,
+                ResetPasswordToken = code
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (!model.Password.Equals(model.RepeatedPassword))
+            {
+                ModelState.AddModelError(string.Empty, "Podane hasła różnią się!");
+                return View("ResetPassword", model);
+            }
+
+            await _userManager.ResetPasswordAsync(user, model.ResetPasswordToken, model.Password);
+            await _userManager.ResetAccessFailedCountAsync(user);
+            await _userManager.SetLockoutEndDateAsync(user,null);
+
+            ModelState.AddModelError(string.Empty, "Podane hasła różnią się!");
+            return View("ResetPassword", model);
+
         }
     }
 }

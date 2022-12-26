@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.UserManagement.EditUserModel;
+﻿@using Org.BouncyCastle.Math.EC.Rfc7748
+@model WebApplication1.Models.UserManagement.EditUserModel;
 
 @{
     ViewData["Title"] = "Edit";
@@ -37,7 +38,7 @@
                         <div class="card-body" style="display: block;">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
-                            
+
                             <div asp-validation-summary="All" class="text-danger"></div>
 
 
@@ -54,6 +55,27 @@
                                 <input asp-for="Email" class="form-control" />
                             </div>
 
+                            <div class="form-group">
+                                <label asp-for="Role"></label>
+                                <select asp-for="Role" class="form-control" asp-items="ViewBag.Roles"></select>
+                                @*@foreach (var role in ViewBag.Roles)
+        {
+            <div class="custom-control custom-radio">
+                @if (role.Name.Equals(ViewBag.CurrentRole))
+                {
+                    @Html.RadioButtonFor(m => m.Role, (string)role.Name, new { @checked = "true", @class = "custom-control-input ", @id = role.Name  })
+                    <label for="@role.Name" class="custom-control-label">@role.Name</label>
+                }
+                else
+                {
+                    @Html.RadioButtonFor(m => m.Role, (string)role.Name, new { @class = "custom-control-input", @id = role.Name })
+                    <label for="@role.Name" class="custom-control-label">@role.Name</label>
+                }
+
+            </div>
+        }*@
+
+                            </div>
                             <div class="card-footer">
                                 <a asp-action="ShowAllUsers" class="btn btn-secondary">Anuluj</a>
                                 <input type="submit" value="Zapisz zmiany" class="btn btn-primary float-right" />

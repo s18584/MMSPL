@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using MailKit.Security;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.Helpers;
 using WebApplication1.models.databasemodels;
+using WebApplication1.Models.DTO;
 using WebApplication1.Models.UserManagement;
+using WebApplication1.Service;
 
 namespace WebApplication1.Controllers
 {
@@ -38,14 +44,20 @@ namespace WebApplication1.Controllers
         {
             var user = await _userManagement.FindByIdAsync(guid);
 
-            EditUserModel model = new EditUserModel();
+            EditUserModel model = new()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Id = guid
+            };
+            
+            var AllRoles = _roleManager.Roles.ToList();
+            var UserRoles = await _userManagement.GetRolesAsync(user);
+            var userRole = new SelectList(AllRoles, "Name","Name", UserRoles.FirstOrDefault());
 
-            model.FirstName = user.FirstName;
-            model.LastName = user.LastName;
-            model.Email = user.Email;
-            model.Id = guid;
-            
-            
+            ViewBag.Roles = userRole;
+
             return View("EditUser",model);
         }
 
@@ -69,6 +81,9 @@ namespace WebApplication1.Controllers
 
             await _userManagement.UpdateAsync(user);
 
+            await _userManagement.RemoveFromRolesAsync(user, await _userManagement.GetRolesAsync(user));
+
+            await _userManagement.AddToRoleAsync(user, model.Role);
 
             return RedirectToAction(nameof(ShowAllUsers));
         }
@@ -112,11 +127,52 @@ namespace WebApplication1.Controllers
             return View(_roleManager.Roles);
         }
 
-        public IActionResult ShowAllUsers()
+        public async Task<IActionResult> ShowAllUsers()
         {
-            return View(_userManagement.Users);
+            var model = new List<ShowUsersWithRole>();
+            foreach (var user in _userManagement.Users)
+            {
+                var UserInRole = new ShowUsersWithRole()
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    LockoutEnd = user.LockoutEnd
+                };
+                
+                model.Add(UserInRole);
+            }
+
+            foreach (var user in model)
+            {
+                var UserFromUserManagement = await _userManagement.FindByIdAsync(user.Id);
+                var Roles = await _userManagement.GetRolesAsync(UserFromUserManagement);
+
+                user.Role = Roles.FirstOrDefault();
+            }
+
+            return View(model);
         }
 
         
+
+        [HttpGet("/UserManagement/SendResetPassword/{guid}")]
+        public async Task<IActionResult> SendResetPassword(string guid)
+        {
+            var user = await _userManagement.FindByIdAsync(guid);
+
+            var code = await _userManagement.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action("ResetPassword", "Login",
+                new { UserId = user.Id, code = code },"https");
+
+            EmailService emailService = new EmailService("serwer1311887.home.pl", 465, SecureSocketOptions.SslOnConnect);
+
+            emailService.SendAsync("d.parol@business-care.pl",user.Email,"Resetowanie hasła", "Twoje hasło zostało zrestartowane. <a href=\"" + callbackUrl + "\">Kliknij tu aby je zrestartować</a>");
+
+
+            return RedirectToAction("ShowAllUsers");
+        }
     }
 }
