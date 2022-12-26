@@ -28,6 +28,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (_signInManager.Context.User.Identity.IsAuthenticated)
+            {
+                return LocalRedirect("/Campaigns");
+            }
             return View();
         }
 

@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
             _roleManager = roleManager;
         }
 
-        [AllowAnonymous]
+        
         public IActionResult Index()
         {
             
@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(UserAddView model)
         {
-            Serilog.Log.Error("cos nie dziala blad usera");
+            
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser
