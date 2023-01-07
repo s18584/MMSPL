@@ -122,10 +122,10 @@ namespace WebApplication1.Controllers
 
         }
 
-        public IActionResult ShowAllRoles()
+       /* public IActionResult ShowAllRoles()
         {
             return View(_roleManager.Roles);
-        }
+        }*/
 
         public async Task<IActionResult> ShowAllUsers()
         {

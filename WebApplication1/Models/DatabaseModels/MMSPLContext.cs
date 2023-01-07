@@ -49,6 +49,7 @@ namespace WebApplication1.models.databasemodels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.HasAnnotation("Relational:Collation", "Polish_CI_AS");
 
             modelBuilder.Entity<Campaign>(entity =>
