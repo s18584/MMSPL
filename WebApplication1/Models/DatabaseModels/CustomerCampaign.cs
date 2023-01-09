@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 #nullable disable
@@ -20,9 +19,9 @@ namespace WebApplication1.models.databasemodels
         public int OkToThirdParty { get; set; }
 
         [Display(Name = "OK to EMAIL")]
-        public string OkToEmailText 
+        public string OkToEmailText
         {
-            get { return OkToEmail == 1 ? "TAK" : "NIE"; }  
+            get { return OkToEmail == 1 ? "TAK" : "NIE"; }
         }
 
         [Display(Name = "OK to 3RD")]

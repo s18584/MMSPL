@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using Microsoft.AspNetCore.Http;
 using Serilog;
-using Serilog.Context;
+using System;
 using WebApplication1.Helpers;
 using WebApplication1.models.databasemodels;
 
@@ -17,7 +16,6 @@ namespace WebApplication1
 {
     public class Startup
     {
-        private readonly IWebHostEnvironment _env;
 
         public Startup(IConfiguration configuration)
         {
@@ -29,10 +27,11 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddControllersWithViews();
 
             services.AddScoped<MMSPLContext>();
+            services.AddScoped<SerilogContext>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"))
@@ -41,8 +40,9 @@ namespace WebApplication1
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.User.RequireUniqueEmail = true;
-                    options.Lockout.MaxFailedAccessAttempts = 3;
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(3);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                    options.SignIn.RequireConfirmedEmail = false;
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -67,7 +67,7 @@ namespace WebApplication1
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -76,7 +76,7 @@ namespace WebApplication1
             {
                 options.EnrichDiagnosticContext = PushSeriLogProperties;
             });
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -87,7 +87,7 @@ namespace WebApplication1
         public void PushSeriLogProperties(IDiagnosticContext diagnosticContext, HttpContext httpContext)
         {
             diagnosticContext.Set("UserName", httpContext.User.Identity.Name);
-           
+
         }
     }
 }

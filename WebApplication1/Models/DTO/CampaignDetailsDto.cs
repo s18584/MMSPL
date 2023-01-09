@@ -14,7 +14,7 @@ namespace WebApplication1.Models.DTO
             Documents = new HashSet<Document>();
             Promocodes = new HashSet<Promocode>();
             SendingActions = new HashSet<SendingAction>();
-            
+
         }
 
         public int Id { get; set; }
@@ -36,15 +36,17 @@ namespace WebApplication1.Models.DTO
         [Display(Name = "Budżet")]
         public int Budget { get; set; }
 
-        
+
         public int UsersCountData { get; set; }
         public int CostSumData { get; set; }
 
-        
-        public int costUsagePercent { 
-            get {
+
+        public int costUsagePercent
+        {
+            get
+            {
                 return (int)Math.Round((double)(100 * CostSumData) / Budget);
-            } 
+            }
         }
 
         [Display(Name = "Kontrahent")]

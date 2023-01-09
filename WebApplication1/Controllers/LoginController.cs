@@ -1,16 +1,10 @@
-﻿using System;
+﻿using Castle.Core.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
-using MailKit.Security;
-using Microsoft.AspNetCore.Razor.Language;
-using RazorEngine;
-using RazorEngine.Templating;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Models.DTO;
-using WebApplication1.Service;
 
 namespace WebApplication1.Controllers
 {
@@ -53,11 +47,15 @@ namespace WebApplication1.Controllers
                 if (singOutResult.IsCompletedSuccessfully)
                 {
                     var resultOfLogin = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
-                    
+
                     if (resultOfLogin.Succeeded)
                     {
                         var user = await _userManager.FindByEmailAsync(model.Email);
                         Serilog.Log.Information("User zalogowany porpawnie: " + user.Email);
+                        if (await _userManager.IsInRoleAsync(user, "RODO"))
+                        {
+                            return LocalRedirect("/Customers");
+                        }
                         return LocalRedirect("/Campaigns");
                     }
                     else
@@ -68,11 +66,11 @@ namespace WebApplication1.Controllers
                             ModelState.AddModelError(string.Empty, "Konto użytkownika jest zablokowane.");
                             return View("Index", model);
                         }
-                        
+
                         Serilog.Log.Information("Nieudana próba zalogowania: " + model.Email);
                         ModelState.AddModelError(string.Empty, "Nieudana próba logowania.");
                         return View("Index", model);
-                        
+
                     }
                 }
             }
@@ -106,14 +104,29 @@ namespace WebApplication1.Controllers
                 return View("ResetPassword", model);
             }
 
-             
+
             await _userManager.ResetPasswordAsync(user, model.ResetPasswordToken, model.Password);
             await _userManager.ResetAccessFailedCountAsync(user);
-            await _userManager.SetLockoutEndDateAsync(user,null);
+            await _userManager.SetLockoutEndDateAsync(user, null);
 
             ModelState.AddModelError(string.Empty, "Hasło zostało zmienione!");
-            return View("Index", model);
+            return View("Index");
 
+        }
+
+        public IActionResult SingOff()
+        {
+            if (_signInManager.IsSignedIn(_signInManager.Context.User))
+            {
+                var singOutResult = _signInManager.SignOutAsync();
+                if (singOutResult.IsCompletedSuccessfully)
+                {
+                    return RedirectToAction("index", "Login");
+                }
+
+            }
+
+            return BadRequest();
         }
     }
 }

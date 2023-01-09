@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.Description;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebApplication1.models.databasemodels;
 using WebApplication1.Models.DTO;
 
 namespace WebApplication1
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class CampaignsController : Controller
     {
         private readonly MMSPLContext _context;
@@ -48,9 +50,9 @@ namespace WebApplication1
                 .Include(c => c.Costs)
                     .ThenInclude(c => c.IdCostTypeNavigation)
                 .Include(c => c.Costs)
-                    .ThenInclude(c => c.IdContractorNavigation)   
+                    .ThenInclude(c => c.IdContractorNavigation)
                 .Where(c => c.Id == id)
-                .Select(c => 
+                .Select(c =>
                    new CampaignDetailsDto()
                    {
                        Id = c.Id,
@@ -63,24 +65,24 @@ namespace WebApplication1
                        CustomerCampaigns = c.CustomerCampaigns,
                        Documents = c.Documents,
                        Promocodes = c.Promocodes,
-                       SendingActions = c.SendingActions,                     
+                       SendingActions = c.SendingActions,
 
                        UsersCountData = c.CustomerCampaigns.Count,
                        CostSumData = c.Costs.Sum(x => x.Amount)
                    }
-                )                 
+                )
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (campaign == null)
             {
                 return NotFound();
             }
-            
+
             var costGroupData = campaign.Costs
                                 .GroupBy(c => c.IdCostTypeNavigation.Name)
                                 .Select(g => new GroupRaportDataDto
-                                { 
-                                    Key = g.Key, 
+                                {
+                                    Key = g.Key,
                                     Value = g.Sum(x => x.Amount)
                                 })
                                 .ToList();
@@ -94,9 +96,9 @@ namespace WebApplication1
                                             })
                                             .ToList();
 
-            ViewData["costGroupData"] = costGroupData; 
+            ViewData["costGroupData"] = costGroupData;
             ViewData["sendingActionsGroupData"] = sendingActionsGroupData;
-            
+
             return View(campaign);
         }
 
@@ -111,7 +113,7 @@ namespace WebApplication1
             {
                 ViewData["IdContractor"] = new SelectList(_context.Contractors, "Id", "Name", ctr);
             }
-            
+
             return View();
         }
 
@@ -142,7 +144,7 @@ namespace WebApplication1
                                                     .Where(x => x.cc.IdCampaign.Equals(id))
                                                     .GroupBy(x => x.cc.IdCustomer)
                                                     .Select(x => x.Key);
-                                                    
+
             /*
                                                     .Select(x => new Customer
                                                     {
@@ -167,7 +169,7 @@ namespace WebApplication1
                                                         Address = x.Address,
                                                         City = x.City,
                                                         PostCode = x.PostCode
-                                                    }); 
+                                                    });
 
             ViewData["RouteId"] = id;
             return View(await customersRes.ToListAsync());

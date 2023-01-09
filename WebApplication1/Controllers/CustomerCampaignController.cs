@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.models.databasemodels;
-using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class CustomerCampaignController : Controller
     {
         private readonly MMSPLContext _context;
@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
             ViewData["OkToEmail"] = new SelectList(listItems, "Value", "Text");
             ViewData["OkToThirdParty"] = new SelectList(listItems, "Value", "Text");
 
-           
+
             return View(customerCampaign);
         }
 
@@ -133,7 +133,7 @@ namespace WebApplication1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Campaigns", new {id = customerCampaign.IdCampaign});
+                return RedirectToAction("Details", "Campaigns", new { id = customerCampaign.IdCampaign });
             }
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Description", customerCampaign.IdCampaign);
             ViewData["IdCustomer"] = new SelectList(_context.Customers, "Id", "Address", customerCampaign.IdCustomer);
@@ -168,7 +168,7 @@ namespace WebApplication1.Controllers
             var customerCampaign = await _context.CustomerCampaigns.FirstOrDefaultAsync(x => x.IdCampaign.Equals(IdCampaign) && x.IdCustomer.Equals(IdCustomer));
             _context.CustomerCampaigns.Remove(customerCampaign);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Campaigns", new { id = IdCampaign});
+            return RedirectToAction("Details", "Campaigns", new { id = IdCampaign });
         }
 
         private bool CustomerCampaignExists(int id)
@@ -179,14 +179,14 @@ namespace WebApplication1.Controllers
         // POST: CustomerCampaign/AddCustomers/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCustomers([FromRoute]int id, List<int> customerId)
+        public async Task<IActionResult> AddCustomers([FromRoute] int id, List<int> customerId)
         {
             if (ModelState.IsValid)
             {
                 foreach (int cid in customerId)
                 {
-                    
-                    _context.Add(new CustomerCampaign 
+
+                    _context.Add(new CustomerCampaign
                     {
                         IdCampaign = id,
                         IdCustomer = cid,
@@ -197,10 +197,10 @@ namespace WebApplication1.Controllers
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Campaigns", new { id });
-           }
-           
-           return Ok("Błąd");
-           
+            }
+
+            return Ok("Błąd");
+
         }
     }
 }

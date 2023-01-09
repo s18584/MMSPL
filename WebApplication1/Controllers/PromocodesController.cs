@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.models.databasemodels;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class PromocodesController : Controller
     {
         private readonly MMSPLContext _context;

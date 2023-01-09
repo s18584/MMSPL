@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebApplication1.Models.DTO
+﻿namespace WebApplication1.Models.DTO
 {
     public class AddCustomersToCampaignFormData
     {

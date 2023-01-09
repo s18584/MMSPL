@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 #nullable disable
@@ -32,7 +31,7 @@ namespace WebApplication1.models.databasemodels
         [Display(Name = "Kontrahent")]
         public int IdContractor { get; set; }
 
-        [Required(ErrorMessage = "Pole jest wymagane")]       
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [Display(Name = "Budżet")]
         public int Budget { get; set; }
 

@@ -34,9 +34,9 @@ namespace WebApplication1.models.databasemodels
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Pole jest wymagane")]       
+        [Required(ErrorMessage = "Pole jest wymagane")]
         [Display(Name = "Data urodzenia")]
-        [DisplayFormat(DataFormatString ="{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime BirthDate { get; set; }
 
         [Display(Name = "Wiek")]

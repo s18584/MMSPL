@@ -3,7 +3,7 @@
 namespace WebApplication1.Service
 {
     public class PostCodeService
-    {       
+    {
 
         public static IReadOnlyDictionary<string, string> PostCodesData { get; } = new Dictionary<string, string>
         {
@@ -22097,7 +22097,7 @@ namespace WebApplication1.Service
             { "99-423", "Łódzkie"},
             { "99-434", "Łódzkie"},
             { "99-440", "Łódzkie"},
-        };             
+        };
 
         public static string GetAreaFromPostCode(string postcode)
         {

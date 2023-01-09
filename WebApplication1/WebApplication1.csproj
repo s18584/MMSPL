@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\Models\Logs\Log.cs" Link="Models\Logs\Log.cs" />
+    <Compile Include="..\..\..\Models\Logs\SerilogContext.cs" Link="Models\Logs\SerilogContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
@@ -39,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Logs\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 

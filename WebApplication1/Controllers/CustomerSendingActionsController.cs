@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MailKit.Security;
+﻿using MailKit.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.models.databasemodels;
 using WebApplication1.Service;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class CustomerSendingActionsController : Controller
     {
         private readonly MMSPLContext _context;
@@ -195,7 +196,7 @@ namespace WebApplication1.Controllers
                                                         City = x.cmp.cc.cm.City,
                                                         PostCode = x.cmp.cc.cm.PostCode
                                                     });
-            
+
 
             ViewData["RouteId"] = id;
 
@@ -234,14 +235,14 @@ namespace WebApplication1.Controllers
         }
 
         // GET: CustomerSendingActions/Filter/5
-        public async Task<IActionResult> Success(int? id)
+        public IActionResult Success(int? id)
         {
 
             if (id == null)
             {
                 return NotFound();
             }
-            
+
             ViewData["RouteId"] = id;
 
             return View();

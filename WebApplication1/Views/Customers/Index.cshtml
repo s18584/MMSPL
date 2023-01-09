@@ -103,11 +103,14 @@
                                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">
                                                             <i class="fas fa-pencil-alt"></i>
                                                             Edytuj
-                                                        </a>                                                         
+                                                        </a> 
+                                                    @if (User.IsInRole("RODO"))
+                                                    {
                                                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
                                                             <i class="fas fa-trash"></i>
                                                             Usuń
                                                         </a>
+                                                    }
                                                     </td>
                                                 </tr>
                                                 }

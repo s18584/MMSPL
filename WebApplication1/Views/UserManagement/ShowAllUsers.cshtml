@@ -28,7 +28,7 @@
         Lista użytkowników
     </h3>
     <div class="card-tools ml-auto p-2 pr-4">
-        <a asp-controller="UserManagement" asp-action="CreateUser" class="btn btn-primary float-right" >
+        <a asp-controller="UserManagement" asp-action="Create" class="btn btn-primary float-right" >
             <i class="fas fa-user-plus"></i>
             Dodaj
         </a>
@@ -94,20 +94,28 @@
                 {
                     <td>Zablokowany</td>
                 }
-                <td class="text-center" id="actionColumn">
-                    <a asp-action="SendResetPassword" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
-                        <i class="fas fa-info-circle"></i>
-                        Wyślij link do resetrowania hasła
-                    </a> 
-                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-info btn-sm">
-                        <i class="fas fa-pencil-alt"></i>
-                        Edytuj
-                    </a>                                                         
-                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i>
-                        Usuń
-                    </a>
-                </td>
+            <td class="text-center" id="actionColumn">
+                <a asp-action="SendResetPassword" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
+                    <i class="fas fa-info-circle"></i>
+                    Wyślij link do resetrowania hasła
+                </a>
+                <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-info btn-sm">
+                    <i class="fas fa-pencil-alt"></i>
+                    Edytuj
+                </a>
+                <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i>
+                    Usuń
+                </a>
+                <a asp-action="Block" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
+                    <i class="fas"></i>
+                    Zablokuj
+                </a>
+                <a asp-action="Unlock" asp-route-id="@user.Id" class="btn btn-primary btn-sm">
+                    <i class="fas"></i>
+                    Odblokuj
+                </a>
+            </td>
             </tr>
         }
     </tbody>

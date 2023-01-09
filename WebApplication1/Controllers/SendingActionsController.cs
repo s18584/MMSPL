@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.models.databasemodels;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class SendingActionsController : Controller
     {
         private readonly MMSPLContext _context;
@@ -51,14 +51,14 @@ namespace WebApplication1.Controllers
         public IActionResult Create(int? campid)
         {
             if (campid == null)
-            {                
+            {
                 ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name");
             }
-            else 
+            else
             {
                 ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", campid);
             }
-            
+
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name");
             return View();
         }
@@ -74,7 +74,7 @@ namespace WebApplication1.Controllers
             {
                 _context.Add(sendingAction);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new {id = sendingAction.Id});
+                return RedirectToAction(nameof(Details), new { id = sendingAction.Id });
             }
             ViewData["IdCampaign"] = new SelectList(_context.Campaigns, "Id", "Name", sendingAction.IdCampaign);
             ViewData["IdSendingActionType"] = new SelectList(_context.SendingActionTypes, "Id", "Name", sendingAction.IdSendingActionType);
@@ -92,7 +92,7 @@ namespace WebApplication1.Controllers
             var sendingAction = await _context.SendingActions
                 .Include(s => s.IdCampaignNavigation)
                 .Include(s => s.IdSendingActionTypeNavigation)
-                .FirstOrDefaultAsync( x => x.Id.Equals(id));
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (sendingAction == null)
             {
@@ -174,6 +174,6 @@ namespace WebApplication1.Controllers
         private bool SendingActionExists(int id)
         {
             return _context.SendingActions.Any(e => e.Id == id);
-        } 
+        }
     }
 }

@@ -1,13 +1,13 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.IO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using System;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.IO;
 
 namespace WebApplication1
 {
@@ -22,7 +22,7 @@ namespace WebApplication1
 
         public static void Main(string[] args)
         {
-            
+
             string connectionString = Configuration.GetConnectionString("LogsDatabase");
             var columnOptions = new ColumnOptions
             {
@@ -31,7 +31,7 @@ namespace WebApplication1
                     new SqlColumn("UserName", SqlDbType.NVarChar)
                 }
             };
-            Log.Logger = new LoggerConfiguration()
+            Serilog.Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.MSSqlServer(connectionString, sinkOptions: new MSSqlServerSinkOptions { TableName = "Log" }
                     , null, null, LogEventLevel.Information, null, columnOptions: columnOptions, null, null)

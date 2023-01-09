@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.CodeAnalysis.Host;
 using MimeKit;
 using MimeKit.Text;
 
 namespace WebApplication1.Service
 {
-    public class EmailService :IEmailSender
+    public class EmailService : IEmailSender
     {
         //private readonly SmtpClient _smtp;
         private readonly string _host;
@@ -50,14 +45,14 @@ namespace WebApplication1.Service
 
             // send email
             using var _smtp = new SmtpClient();
-            
-                _smtp.Connect(_host,_port, _connectionSecureOption);
-                _smtp.Authenticate("d.parol@business-care.pl", "");
-                _smtp.Send(email);
-                _smtp.Disconnect(true);
-            
+
+            _smtp.Connect(_host, _port, _connectionSecureOption);
+            _smtp.Authenticate("d.parol@business-care.pl", "");
+            _smtp.Send(email);
+            _smtp.Disconnect(true);
+
         }
 
-        
+
     }
 }

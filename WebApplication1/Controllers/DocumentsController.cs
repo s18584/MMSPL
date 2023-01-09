@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using HeyRed.Mime;
-using Microsoft.AspNetCore.Hosting;
+﻿using HeyRed.Mime;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting.Internal;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.models.databasemodels;
 using WebApplication1.Models.DTO;
 
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Admin,Pracownik")]
     public class DocumentsController : Controller
     {
+
         private readonly MMSPLContext _context;
-        private readonly IWebHostEnvironment hostingEnvironment;
-        private readonly String uploads = Path.Combine(@"C:\PJATK\inż\WebApplication1\wwwroot\", "Files");
+        private readonly String uploads = Path.Combine(@"C:\MMSPL\wwwroot", "Files");
 
         public DocumentsController(MMSPLContext context)
         {
@@ -73,7 +72,7 @@ namespace WebApplication1.Controllers
             Document document = new Document();
             if (ModelState.IsValid)
             {
-                
+
                 //Getting file meta data
                 var fileName = Path.GetFileName(model.Path.FileName);
                 var contentType = model.Path.ContentType;
@@ -116,7 +115,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var files =System.IO.Directory.GetFiles(uploads);
+            var files = System.IO.Directory.GetFiles(uploads);
             if (!files.Contains(document.Path))
             {
                 return NotFound();
@@ -124,7 +123,7 @@ namespace WebApplication1.Controllers
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(document.Path);
             string mimeType = MimeTypesMap.GetMimeType(Path.GetFileName(document.Path));
-            
+
             return File(fileBytes, mimeType, Path.GetFileName(document.Path));
         }
 
